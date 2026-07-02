@@ -2,21 +2,21 @@
 
 @theme {
   /* base-colors */
-  --neutral-900: hsl(0, 0%, 4%);
-  --neutral-700: hsl(240, 4%, 9%);
-  --neutral-600: hsl(240, 3%, 13%);
-  --neutral-500: hsl(0, 0%, 18%);
-  --neutral-400: hsl(0, 0%, 24%);
-  --neutral-300: hsl(240, 1%, 27%);
-  --neutral-200: hsl(0, 0%, 62%);
-  --neutral-100: hsl(0, 0%, 78%);
-  --white: hsl(0, 0%, 100%);
+  --color-neutral-900: hsl(0, 0%, 4%);
+  --color-neutral-700: hsl(240, 4%, 9%);
+  --color-neutral-600: hsl(240, 3%, 13%);
+  --color-neutral-500: hsl(0, 0%, 18%);
+  --color-neutral-400: hsl(0, 0%, 24%);
+  --color-neutral-300: hsl(240, 1%, 27%);
+  --color-neutral-200: hsl(0, 0%, 62%);
+  --color-neutral-100: hsl(0, 0%, 78%);
+  --color-white: hsl(0, 0%, 100%);
 
   /* accent-colors*/
-  --lime-500: hsl(71, 92%, 60%);
-  --lime-800: hsl(73, 100%, 10%);
-  --red-500: hsl(104, 96%, 47%);
-  --green-500: hsl(0, 100%, 63%);
+  --color-lime-500: hsl(71, 92%, 60%);
+  --color-lime-800: hsl(73, 100%, 10%);
+  --color-red-500: hsl(104, 96%, 47%);
+  --color-green-500: hsl(0, 100%, 63%);
 }
 
 @font-face {
@@ -26,6 +26,7 @@
 
 body {
   font-family: "JetBrains Mono", monospace;
-  background-color: var(--neutral-900);
-  color: var(--white);
+  background-color: var(--color-neutral-900);
+  color: var(--color-white);
+  font-size: 0.875rem;
 }
