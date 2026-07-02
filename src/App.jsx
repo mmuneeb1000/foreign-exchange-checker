@@ -55,7 +55,7 @@ function App() {
     <>
       <Header />
       <Live />
-      <main className="px-4 py-8">
+      <main className="px-4 py-8 lg:w-230 lg:mx-auto">
         <Converter
           currencies={currencies}
           from={from}

@@ -5,7 +5,7 @@ import Favorites from "./ToggleMenu/Favorites";
 
 function TabsBar() {
   return (
-    <section>
+    <section className="py-2">
       <div className="lg:hidden">
         <select
           name="toggle"

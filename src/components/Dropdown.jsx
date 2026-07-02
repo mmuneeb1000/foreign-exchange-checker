@@ -65,7 +65,7 @@ function Dropdown({ currencies, value, onChange }) {
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="flex w-full items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
+        className="flex w-16 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
       >
         <div className="flex items-center gap-2">
           {getFlag(value) && (
@@ -81,7 +81,7 @@ function Dropdown({ currencies, value, onChange }) {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
+        <div className="absolute right-0 top-full z-50 mt-2 w-60 rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
           <div className="border-b border-neutral-700 p-3">
             <div className="flex items-center gap-2 rounded-lg bg-neutral-700 px-3">
               <input

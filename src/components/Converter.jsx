@@ -29,43 +29,59 @@ function Converter({
     });
   }
   return (
-    <section className="bg-neutral-900 flex flex-col">
+    <section className="bg-neutral-900 flex flex-col ">
       <h2 className="text-base uppercase">Check The Rate</h2>
-      <div className="flex p-3 my-3 bg-neutral-700 rounded-xl justify-around flex-col gap-4 ">
-        <div className="p-4 rounded-xl bg-neutral-600">
-          <h3>Send</h3>
-          <input
-            type="number"
-            value={amount}
-            min="0"
-            onChange={(e) => setAmount(Number(e.target.value))}
-            className="bg-transparent text-2xl w-full outline-none"
-          />
-          <Dropdown currencies={currencies} value={from} onChange={setFrom} />
-        </div>
-
-        <button
-          onClick={swapCurrencies}
-          className="mx-auto p-2 w-10 rounded-xl bg-neutral-600"
+      <div
+        className="flex flex-col px-3 py-4 my-3 bg-neutral-700 
+      rounded-xl gap-4"
+      >
+        <div
+          className="flex flex-col justify-center items-center 
+        lg:flex-row"
         >
-          <img src={ConversionIcon} alt="Swap currencies" />
-        </button>
+          <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
+            <h3 className="text-neutral-200">Send</h3>
+            <div className="flex ">
+              <input
+                type="number"
+                value={amount}
+                min="1"
+                onChange={(e) => setAmount(Number(e.target.value))}
+                className="bg-transparent text-2xl w-full outline-none lg:w-auto"
+              />
+              <Dropdown
+                currencies={currencies}
+                value={from}
+                onChange={setFrom}
+              />
+            </div>
+          </div>
+          <div className="mx-auto my-2 lg:mx-4 lg:my-auto">
+            <button
+              onClick={swapCurrencies}
+              className=" p-2 w-10 h-10 rounded-xl bg-neutral-600"
+            >
+              <img src={ConversionIcon} alt="Swap currencies" />
+            </button>
+          </div>
+          <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
+            <h3 className="text-neutral-200">Recieve</h3>
+            <div className="flex">
+              <input
+                readOnly
+                value={loading ? "..." : converted}
+                className="bg-transparent text-lime-500 text-2xl outline-none w-full lg:w-auto"
+              />
 
-        <div className="p-4 rounded-xl bg-neutral-600">
-          <h3>Recieve</h3>
-          <input
-            readOnly
-            value={loading ? "..." : converted}
-            className="bg-transparent text-2xl w-full outline-none"
-          />
-
-          <Dropdown currencies={currencies} value={to} onChange={setTo} />
+              <Dropdown currencies={currencies} value={to} onChange={setTo} />
+            </div>
+          </div>
         </div>
         <div
-          className="flex flex-col py-4 gap-2 align-center
-        border-t-2 border-neutral-600 border-dashed"
+          className="flex flex-col pt-2 px-2 gap-2 
+        border-t border-neutral-500 border-dashed lg:flex-row"
         >
-          <p className="text-xs">
+          <p className="flex items-center text-xs lg:w-full">
             {loading
               ? "Loading..."
               : `1 ${from} = ${(converted / amount).toFixed(4)} ${to}`}
@@ -73,13 +89,13 @@ function Converter({
 
           {error && <p className="text-xs text-red-400">{error}</p>}
 
-          <div className="flex justify-center gap-2">
+          <div className="flex justify-center gap-2 my-2">
             <button
               onClick={() => setFavorite(!favorite)}
-              className={`text-xs px-2 py-1 rounded-xl ${
+              className={`text-xs px-2 py-1 rounded-lg ${
                 favorite
                   ? "bg-lime-500 text-neutral-900"
-                  : "border border-lime-500 text-lime-500"
+                  : "border-2 border-neutral-300 text-neutral-200"
               }`}
             >
               {favorite ? "Favorited" : "Favorite"}
@@ -87,7 +103,7 @@ function Converter({
 
             <button
               onClick={logConversion}
-              className="text-xs px-2 py-1 border border-lime-500 rounded-xl"
+              className="text-xs px-2 py-1 border border-lime-500 rounded-lg whitespace-nowrap"
             >
               Log Conversion
             </button>
