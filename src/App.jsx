@@ -1,3 +1,4 @@
+import { getCurrencies, convertCurrency } from "./api/frankfurter";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -19,38 +20,36 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    async function loadCurrencies() {
+      try {
+        const data = await getCurrencies();
+        setCurrencies(data);
+      } catch {
+        setError("Unable to load currencies.");
+      }
+    }
+
     loadCurrencies();
   }, []);
 
   useEffect(() => {
+    async function convert() {
+      try {
+        setLoading(true);
+
+        const data = await convertCurrency(from, to, amount);
+
+        setConverted(data.rates[to]);
+        setError("");
+      } catch {
+        setError("Unable to fetch rates.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     convert();
   }, [amount, from, to]);
-
-  async function loadCurrencies() {
-    const res = await fetch("https://api.frankfurter.app/currencies");
-    const data = await res.json();
-
-    setCurrencies(data);
-  }
-
-  async function convert() {
-    try {
-      setLoading(true);
-
-      const res = await fetch(
-        `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`,
-      );
-
-      const data = await res.json();
-
-      setConverted(data.rates[to]);
-      setError("");
-    } catch {
-      setError("Unable to fetch rates.");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <>

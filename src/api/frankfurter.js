@@ -1,0 +1,23 @@
+const API_URL = "https://api.frankfurter.app";
+
+export async function getCurrencies() {
+  const response = await fetch(`${API_URL}/currencies`);
+
+  if (!response.ok) {
+    throw new Error("Failed to load currencies");
+  }
+
+  return response.json();
+}
+
+export async function convertCurrency(from, to, amount) {
+  const response = await fetch(
+    `${API_URL}/latest?amount=${amount}&from=${from}&to=${to}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to convert currency");
+  }
+
+  return response.json();
+}
