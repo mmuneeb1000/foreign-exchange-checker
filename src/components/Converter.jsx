@@ -15,17 +15,20 @@ function Converter() {
           <h3>Recieve</h3>
           <p className="text-2xl">850</p>
         </div>
-        <div className="flex flex-col gap-2 align-center">
-          <p className="text-[10px]"> 1 USD = 0.85EU </p>
+        <div
+          className="flex flex-col py-4 gap-2 align-center
+        border-t-2 border-neutral-600 border-dashed"
+        >
+          <p className="text-xs"> 1 USD = 0.85EU </p>
           <div className="flex justify-center gap-2">
             <button
-              className="text-[10px] text-neutral-900 
+              className="text-xs text-neutral-900 
             px-2 py-1 bg-lime-500 rounded-xl "
             >
               Favourited
             </button>
             <button
-              className="text-[10px] text-white 
+              className="text-xs text-white 
             px-2 py-1 border border-lime-500 rounded-xl"
             >
               Log Conversion
