@@ -116,7 +116,7 @@ function Dropdown({ currencies, value, onChange }) {
                 <div className="flex flex-col">
                   <span className="font-medium">{code}</span>
 
-                  <span className="text-xs text-neutral-400">{name}</span>
+                  <span className="text-xs text-neutral-200">{name}</span>
                 </div>
               </li>
             ))}
