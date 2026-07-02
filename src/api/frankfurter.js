@@ -1,4 +1,4 @@
-const API_URL = "https://api.frankfurter.app";
+const API_URL = "https://api.frankfurter.dev/v1";
 
 export async function getCurrencies() {
   const response = await fetch(`${API_URL}/currencies`);
