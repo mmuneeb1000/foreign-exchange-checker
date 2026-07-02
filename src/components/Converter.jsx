@@ -1,4 +1,5 @@
 import ConversionIcon from "../assets/images/icon-exchange.svg";
+import Dropdown from "./Dropdown";
 
 function Converter({
   currencies,
@@ -40,17 +41,7 @@ function Converter({
             onChange={(e) => setAmount(Number(e.target.value))}
             className="bg-transparent text-2xl w-full outline-none"
           />
-          <select
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-            className="bg-transparent outline-none"
-          >
-            {Object.keys(currencies).map((currency) => (
-              <option key={currency} value={currency}>
-                {currency}
-              </option>
-            ))}
-          </select>
+          <Dropdown currencies={currencies} value={from} onChange={setFrom} />
         </div>
 
         <button
@@ -68,17 +59,7 @@ function Converter({
             className="bg-transparent text-2xl w-full outline-none"
           />
 
-          <select
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            className="bg-transparent outline-none"
-          >
-            {Object.keys(currencies).map((currency) => (
-              <option key={currency} value={currency}>
-                {currency}
-              </option>
-            ))}
-          </select>
+          <Dropdown currencies={currencies} value={to} onChange={setTo} />
         </div>
         <div
           className="flex flex-col py-4 gap-2 align-center
