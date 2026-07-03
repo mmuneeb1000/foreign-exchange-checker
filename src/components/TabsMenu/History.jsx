@@ -107,84 +107,116 @@ function History() {
         </div>
       )}
       {!loading && !error && (
-        <div className="h-96 w-full">
-          <div className="mb-6 flex flex-wrap gap-4">
-            <div className="rounded-xl bg-neutral-900 p-5">
-              <p className="mb-2 text-xs uppercase tracking-widest text-neutral-400">
-                Open
-              </p>
-              <p className="text-3xl font-medium">{open.toFixed(4)}</p>
-            </div>
+        <div className=" w-full">
+          <div className=" lg:flex ">
+            <div className="mb-3 grid grid-cols-2 gap-2 lg:flex">
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+                <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
+                  Open
+                </p>
+                <p className="text-lg font-medium">{open.toFixed(4)}</p>
+              </div>
 
-            <div className="rounded-xl bg-neutral-900 p-5">
-              <p className="mb-2 text-xs uppercase tracking-widest text-neutral-400">
-                Last
-              </p>
-              <p className="text-3xl font-medium">{last.toFixed(4)}</p>
-            </div>
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+                <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
+                  Last
+                </p>
+                <p className="text-lg font-medium">{last.toFixed(4)}</p>
+              </div>
 
-            <div className="rounded-xl bg-neutral-900 p-5">
-              <p className="mb-2 text-xs uppercase tracking-widest text-neutral-400">
-                Change
-              </p>
-              <p
-                className={`text-3xl font-medium ${
-                  change >= 0 ? "text-lime-400" : "text-red-400"
-                }`}
-              >
-                {change >= 0 ? "+" : ""}
-                {change.toFixed(4)}
-              </p>
-            </div>
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+                <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
+                  Change
+                </p>
+                <p
+                  className={`text-lg font-medium ${
+                    change >= 0 ? "text-lime-400" : "text-red-400"
+                  }`}
+                >
+                  {change >= 0 ? "+" : ""}
+                  {change.toFixed(4)}
+                </p>
+              </div>
 
-            <div className="rounded-xl bg-neutral-900 p-5">
-              <p className="mb-2 text-xs uppercase tracking-widest text-neutral-400">
-                % Change
-              </p>
-              <p
-                className={`text-3xl font-medium ${
-                  percentChange >= 0 ? "text-lime-400" : "text-red-400"
-                }`}
-              >
-                {percentChange >= 0 ? "▲ +" : "▼ "}
-                {percentChange.toFixed(2)}%
-              </p>
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+                <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
+                  % Change
+                </p>
+                <p
+                  className={`text-lg font-medium ${
+                    percentChange >= 0 ? "text-lime-400" : "text-red-400"
+                  }`}
+                >
+                  {percentChange >= 0 ? "▲ +" : "▼ "}
+                  {percentChange.toFixed(2)}%
+                </p>
+              </div>
+            </div>
+            <div className="flex mb-3 rounded-lg w-57 bg-neutral-700">
+              {ranges.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => setRange(item)}
+                  className={`rounded-md px-3 py-3 text-xs transition ${
+                    range === item
+                      ? "bg-neutral-600 text-white"
+                      : "text-neutral-100 "
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
             </div>
           </div>
-          <div className="flex rounded-lg bg-neutral-900 p-1">
-            {ranges.map((item) => (
-              <button
-                key={item}
-                onClick={() => setRange(item)}
-                className={`rounded-md px-4 py-2 text-sm transition ${
-                  range === item
-                    ? "bg-neutral-700 text-white"
-                    : "text-neutral-400 hover:text-white"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis
-                domain={[min - padding, max + padding]}
-                tickFormatter={(value) => value.toFixed(4)}
-              />
-              <Tooltip />
+          <div className="bg-neutral-600 h-96 p-4 rounded-xl">
+            <span className="text-base">USD/EUR</span>
 
-              <Line
-                type="monotone"
-                dataKey="rate"
-                stroke="hsl(71, 92%, 60%)"
-                strokeWidth={2}
-                dot={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="1 3" vertical={false} />
+                <XAxis
+                  dataKey="date"
+                  tick={{
+                    fill: "#737373",
+                    fontSize: 11,
+                    fontFamily: "Inter",
+                    fontWeight: 500,
+                  }}
+                />
+                <YAxis
+                  domain={[min - padding, max + padding]}
+                  tickFormatter={(value) => value.toFixed(4)}
+                  tick={{
+                    fill: "#737373",
+                    fontSize: 11,
+                    fontWeight: 600,
+                  }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#171717",
+                    border: "none",
+                    borderRadius: "12px",
+                    color: "#fff",
+                  }}
+                  labelStyle={{
+                    color: "#d4d4d4",
+                  }}
+                  itemStyle={{
+                    color: "#84cc16",
+                  }}
+                />
+
+                <Line
+                  type="monotone"
+                  dataKey="rate"
+                  stroke="hsl(71, 92%, 60%)"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       )}
     </section>
