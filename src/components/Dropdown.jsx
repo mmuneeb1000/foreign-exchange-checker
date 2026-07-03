@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import getFlag from "../utils/getFlag";
 
-function Dropdown({ currencies, value, onChange }) {
+const FEATURED = ["USD", "EUR", "GBP", "JPY", "PKR"];
+
+function Dropdown({ currencies = [], value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (!dropdownRef.current?.contains(e.target)) {
         setIsOpen(false);
+        setSearch("");
       }
     }
 
@@ -19,47 +23,73 @@ function Dropdown({ currencies, value, onChange }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  const availableCurrencies = useMemo(() => {
+    return currencies.filter((currency) => getFlag(currency.iso_code));
+  }, [currencies]);
+
   const filteredCurrencies = useMemo(() => {
-    const query = search.toLowerCase();
+    const query = search.trim().toLowerCase();
 
-    return currencies.filter((currency) => {
-      return (
+    const matches = availableCurrencies.filter(
+      (currency) =>
         currency.iso_code.toLowerCase().includes(query) ||
-        currency.name.toLowerCase().includes(query)
-      );
-    });
-  }, [currencies, search]);
+        currency.name.toLowerCase().includes(query),
+    );
 
-  const selectedFlag = getFlag(value);
+    if (query) return matches;
+
+    const featured = FEATURED.map((code) =>
+      matches.find((currency) => currency.iso_code === code),
+    ).filter(Boolean);
+
+    const remaining = matches.filter(
+      (currency) => !FEATURED.includes(currency.iso_code),
+    );
+
+    return [...featured, ...remaining];
+  }, [availableCurrencies, search]);
+
+  const selectedCurrency =
+    availableCurrencies.find((currency) => currency.iso_code === value) ??
+    filteredCurrencies[0] ??
+    null;
 
   return (
-    <div ref={dropdownRef} className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         type="button"
-        onClick={() => setIsOpen((open) => !open)}
-        className="flex w-24 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+        className="flex w-28 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
       >
         <div className="flex items-center gap-2">
-          {selectedFlag ? (
+          {selectedCurrency && (
             <img
-              src={selectedFlag}
-              alt={value}
+              src={getFlag(selectedCurrency.iso_code)}
+              alt={selectedCurrency.iso_code}
               className="h-6 w-6 rounded-full object-cover"
             />
-          ) : (
-            <div className="h-6 w-6 rounded-full bg-neutral-600" />
           )}
 
-          <span>{value}</span>
+          <span>{selectedCurrency?.iso_code ?? value}</span>
         </div>
 
-        <span>▼</span>
+        <span className={`transition-transform ${isOpen ? "rotate-180" : ""}`}>
+          ▼
+        </span>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
+        <div className="absolute right-0 top-full z-50 mt-2 w-72 overflow-hidden rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
           <div className="border-b border-neutral-700 p-3">
             <input
+              ref={inputRef}
               type="text"
               placeholder="Search currency..."
               value={search}
@@ -69,28 +99,24 @@ function Dropdown({ currencies, value, onChange }) {
           </div>
 
           <ul className="max-h-80 overflow-y-auto">
-            {filteredCurrencies.map((currency) => {
-              const flag = getFlag(currency.iso_code);
-
-              return (
+            {filteredCurrencies.length ? (
+              filteredCurrencies.map((currency) => (
                 <li
                   key={currency.iso_code}
                   onClick={() => {
                     onChange(currency.iso_code);
-                    setSearch("");
                     setIsOpen(false);
+                    setSearch("");
                   }}
-                  className="flex cursor-pointer items-center gap-3 px-4 py-3 hover:bg-neutral-700"
+                  className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-neutral-700 ${
+                    currency.iso_code === value ? "bg-neutral-700" : ""
+                  }`}
                 >
-                  {flag ? (
-                    <img
-                      src={flag}
-                      alt={currency.iso_code}
-                      className="h-6 w-6 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="h-6 w-6 rounded-full bg-neutral-600" />
-                  )}
+                  <img
+                    src={getFlag(currency.iso_code)}
+                    alt={currency.iso_code}
+                    className="h-6 w-6 rounded-full object-cover"
+                  />
 
                   <div className="flex flex-col">
                     <span className="font-medium">{currency.iso_code}</span>
@@ -100,10 +126,8 @@ function Dropdown({ currencies, value, onChange }) {
                     </span>
                   </div>
                 </li>
-              );
-            })}
-
-            {filteredCurrencies.length === 0 && (
+              ))
+            ) : (
               <li className="px-4 py-6 text-center text-sm text-neutral-400">
                 No currencies found.
               </li>

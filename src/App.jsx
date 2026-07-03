@@ -7,7 +7,7 @@ import TabsBar from "./components/TabsBar";
 import Converter from "./components/Converter";
 
 function App() {
-  const [currencies, setCurrencies] = useState({});
+  const [currencies, setCurrencies] = useState([]);
 
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
