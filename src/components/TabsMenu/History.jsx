@@ -39,6 +39,17 @@ function History() {
   const [range, setRange] = useState("1M");
   const ranges = ["1D", "1W", "1M", "3M", "1Y", "5Y"];
   const chartRef = useRef(null);
+  useEffect(() => {
+    if (chartRef.current) {
+      const y =
+        chartRef.current.getBoundingClientRect().top + window.scrollY - 100; // offset for sticky header
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
+    }
+  }, [range]);
   function getDateRange(range) {
     const end = new Date();
     const start = new Date();
