@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-
+import ChevronDown from "../assets/images/icon-chevron-down.svg";
+import SearchIcon from "../assets/images/icon-search.svg";
+import TickIcon from "../assets/images/icon-check.svg";
 import getFlag from "../utils/getFlag";
 
 const FEATURED = ["USD", "EUR", "GBP", "JPY", "PKR"];
@@ -73,8 +75,8 @@ function Dropdown({ currencies = [], value, onChange }) {
     <li
       key={currency.iso_code}
       onClick={() => handleSelect(currency)}
-      className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-neutral-700 ${
-        currency.iso_code === value ? "bg-neutral-700" : ""
+      className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-neutral-500 ${
+        currency.iso_code === value ? "bg-neutral-500" : ""
       }`}
     >
       <img
@@ -85,8 +87,9 @@ function Dropdown({ currencies = [], value, onChange }) {
 
       <div className="flex flex-col">
         <span className="font-medium">{currency.iso_code}</span>
-        <span className="text-xs text-neutral-300">{currency.name}</span>
+        <span className="text-xs text-neutral-100">{currency.name}</span>
       </div>
+      {currency.iso_code === value && <img src={TickIcon} />}
     </li>
   );
 
@@ -96,9 +99,10 @@ function Dropdown({ currencies = [], value, onChange }) {
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
-        className="flex w-28 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
+        className="flex w-28 items-center justify-between rounded-lg 
+        cursor-pointer border border-neutral-300 bg-neutral-500 px-3 py-2"
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {selectedCurrency && (
             <img
               src={getFlag(selectedCurrency.iso_code)}
@@ -108,19 +112,30 @@ function Dropdown({ currencies = [], value, onChange }) {
           )}
 
           <span>{selectedCurrency?.iso_code ?? value}</span>
+          <img src={ChevronDown} alt="Menu Dropdown" />
         </div>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-72 overflow-hidden rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
-          <div className="border-b border-neutral-700 p-3">
+        <div
+          className="absolute right-[-0.75rem] top-14 z-50 mt-2 w-72 
+        overflow-hidden rounded-xl border border-neutral-300 
+        bg-neutral-600 shadow-xl"
+        >
+          <div className="p-3 relative">
+            <img
+              className="absolute left-6 top-5.5"
+              src={SearchIcon}
+              alt="Search Icon"
+            />
             <input
               ref={inputRef}
               type="text"
               placeholder="Search currency..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg bg-neutral-700 px-3 py-2 outline-none placeholder:text-neutral-400"
+              className="w-full rounded-lg border border-neutral-400 
+              bg-neutral-600 pl-10 pr-3 py-2 outline-none placeholder:text-neutral-100 placeholder:text-xs"
             />
           </div>
 
@@ -129,19 +144,25 @@ function Dropdown({ currencies = [], value, onChange }) {
               filteredCurrencies.length ? (
                 filteredCurrencies.map(renderCurrency)
               ) : (
-                <li className="px-4 py-6 text-center text-sm text-neutral-400">
+                <li className="px-4 py-6 text-center text-sm text-neutral-200">
                   No currencies found.
                 </li>
               )
             ) : (
               <>
-                <li className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                <li
+                  className="px-4 py-2 text-xs font-semibold uppercase 
+                tracking-wider border-b border-neutral-300 text-neutral-200"
+                >
                   Popular
                 </li>
 
                 {featuredCurrencies.map(renderCurrency)}
 
-                <li className="border-t border-neutral-700 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                <li
+                  className="border-b border-neutral-300 px-4 py-2 text-xs 
+                font-semibold uppercase tracking-wider text-neutral-200"
+                >
                   Others
                 </li>
 

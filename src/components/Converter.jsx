@@ -42,13 +42,13 @@ function Converter({
         >
           <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
             <h3 className="text-neutral-200">Send</h3>
-            <div className="flex ">
+            <div className="flex space-around">
               <input
                 type="number"
                 value={amount}
                 min="1"
                 onChange={(e) => setAmount(Number(e.target.value))}
-                className="bg-transparent text-2xl w-full outline-none lg:w-auto"
+                className="no-spinner bg-transparent text-2xl w-full outline-none"
               />
               <Dropdown
                 currencies={currencies}
@@ -60,18 +60,18 @@ function Converter({
           <div className="mx-auto my-2 lg:mx-4 lg:my-auto">
             <button
               onClick={swapCurrencies}
-              className=" p-2 w-10 h-10 rounded-xl bg-neutral-600"
+              className="cursor-pointer p-2 w-10 h-10 rounded-xl bg-neutral-600"
             >
               <img src={ConversionIcon} alt="Swap currencies" />
             </button>
           </div>
           <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
             <h3 className="text-neutral-200">Recieve</h3>
-            <div className="flex">
+            <div className="flex space-around">
               <input
                 readOnly
                 value={loading ? "..." : converted}
-                className="bg-transparent text-lime-500 text-2xl outline-none w-full lg:w-auto"
+                className="bg-transparent text-lime-500 text-2xl outline-none w-full"
               />
 
               <Dropdown currencies={currencies} value={to} onChange={setTo} />
