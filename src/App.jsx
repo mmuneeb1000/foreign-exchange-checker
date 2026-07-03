@@ -8,7 +8,6 @@ import Converter from "./components/Converter";
 
 function App() {
   const [currencies, setCurrencies] = useState([]);
-
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
   const [rate, setRate] = useState(0);

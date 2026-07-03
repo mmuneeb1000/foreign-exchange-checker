@@ -24,3 +24,15 @@ export async function convertCurrency(from, to, amount) {
     converted: Number((amount * data.rate).toFixed(2)),
   };
 }
+
+export async function getHistory({ from, to, base, quotes }) {
+  const response = await fetch(
+    `${API_URL}/v2/rates?from=${from}&to=${to}&base=${base}&quotes=${quotes}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch history.");
+  }
+
+  return response.json();
+}
