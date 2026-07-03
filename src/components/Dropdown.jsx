@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+
 import getFlag from "../utils/getFlag";
 
 const FEATURED = ["USD", "EUR", "GBP", "JPY", "PKR"];
@@ -33,32 +34,61 @@ function Dropdown({ currencies = [], value, onChange }) {
     return currencies.filter((currency) => getFlag(currency.iso_code));
   }, [currencies]);
 
+  const featuredCurrencies = useMemo(() => {
+    return FEATURED.map((code) =>
+      availableCurrencies.find((currency) => currency.iso_code === code),
+    ).filter(Boolean);
+  }, [availableCurrencies]);
+
+  const otherCurrencies = useMemo(() => {
+    return availableCurrencies.filter(
+      (currency) => !FEATURED.includes(currency.iso_code),
+    );
+  }, [availableCurrencies]);
+
   const filteredCurrencies = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    const matches = availableCurrencies.filter(
+    if (!query) return [];
+
+    return availableCurrencies.filter(
       (currency) =>
         currency.iso_code.toLowerCase().includes(query) ||
         currency.name.toLowerCase().includes(query),
     );
-
-    if (query) return matches;
-
-    const featured = FEATURED.map((code) =>
-      matches.find((currency) => currency.iso_code === code),
-    ).filter(Boolean);
-
-    const remaining = matches.filter(
-      (currency) => !FEATURED.includes(currency.iso_code),
-    );
-
-    return [...featured, ...remaining];
   }, [availableCurrencies, search]);
 
   const selectedCurrency =
     availableCurrencies.find((currency) => currency.iso_code === value) ??
-    filteredCurrencies[0] ??
+    featuredCurrencies[0] ??
     null;
+
+  const handleSelect = (currency) => {
+    onChange(currency.iso_code);
+    setIsOpen(false);
+    setSearch("");
+  };
+
+  const renderCurrency = (currency) => (
+    <li
+      key={currency.iso_code}
+      onClick={() => handleSelect(currency)}
+      className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-neutral-700 ${
+        currency.iso_code === value ? "bg-neutral-700" : ""
+      }`}
+    >
+      <img
+        src={getFlag(currency.iso_code)}
+        alt={currency.iso_code}
+        className="h-6 w-6 rounded-full object-cover"
+      />
+
+      <div className="flex flex-col">
+        <span className="font-medium">{currency.iso_code}</span>
+        <span className="text-xs text-neutral-300">{currency.name}</span>
+      </div>
+    </li>
+  );
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -79,10 +109,6 @@ function Dropdown({ currencies = [], value, onChange }) {
 
           <span>{selectedCurrency?.iso_code ?? value}</span>
         </div>
-
-        <span className={`transition-transform ${isOpen ? "rotate-180" : ""}`}>
-          ▼
-        </span>
       </button>
 
       {isOpen && (
@@ -94,43 +120,33 @@ function Dropdown({ currencies = [], value, onChange }) {
               placeholder="Search currency..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg bg-neutral-700 px-3 py-2 outline-none"
+              className="w-full rounded-lg bg-neutral-700 px-3 py-2 outline-none placeholder:text-neutral-400"
             />
           </div>
 
           <ul className="max-h-80 overflow-y-auto">
-            {filteredCurrencies.length ? (
-              filteredCurrencies.map((currency) => (
-                <li
-                  key={currency.iso_code}
-                  onClick={() => {
-                    onChange(currency.iso_code);
-                    setIsOpen(false);
-                    setSearch("");
-                  }}
-                  className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-neutral-700 ${
-                    currency.iso_code === value ? "bg-neutral-700" : ""
-                  }`}
-                >
-                  <img
-                    src={getFlag(currency.iso_code)}
-                    alt={currency.iso_code}
-                    className="h-6 w-6 rounded-full object-cover"
-                  />
-
-                  <div className="flex flex-col">
-                    <span className="font-medium">{currency.iso_code}</span>
-
-                    <span className="text-xs text-neutral-300">
-                      {currency.name}
-                    </span>
-                  </div>
+            {search ? (
+              filteredCurrencies.length ? (
+                filteredCurrencies.map(renderCurrency)
+              ) : (
+                <li className="px-4 py-6 text-center text-sm text-neutral-400">
+                  No currencies found.
                 </li>
-              ))
+              )
             ) : (
-              <li className="px-4 py-6 text-center text-sm text-neutral-400">
-                No currencies found.
-              </li>
+              <>
+                <li className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                  Popular
+                </li>
+
+                {featuredCurrencies.map(renderCurrency)}
+
+                <li className="border-t border-neutral-700 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                  Others
+                </li>
+
+                {otherCurrencies.map(renderCurrency)}
+              </>
             )}
           </ul>
         </div>
