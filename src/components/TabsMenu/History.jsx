@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getHistory } from "../../api/frankfurter";
 import {
   ResponsiveContainer,
@@ -38,6 +38,7 @@ function History() {
   const [error, setError] = useState(null);
   const [range, setRange] = useState("1M");
   const ranges = ["1D", "1W", "1M", "3M", "1Y", "5Y"];
+  const chartRef = useRef(null);
   function getDateRange(range) {
     const end = new Date();
     const start = new Date();
@@ -111,23 +112,23 @@ function History() {
       )}
       {!loading && !error && (
         <div className=" w-full ">
-          <div className=" lg:flex lg:w-full ">
-            <div className="mb-3 grid grid-cols-2 gap-2 lg:flex">
-              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+          <div className=" lg:flex lg:items-center lg:justify-between lg:h-26">
+            <div className="mb-3 grid grid-cols-2 gap-4 lg:flex lg:justify-between lg:flex-nowrap">
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3 lg:w-32 lg:h-18">
                 <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
                   Open
                 </p>
                 <p className="text-lg font-medium">{open.toFixed(4)}</p>
               </div>
 
-              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3 lg:w-32 lg:h-18">
                 <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
                   Last
                 </p>
                 <p className="text-lg font-medium">{last.toFixed(4)}</p>
               </div>
 
-              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3 lg:w-32 lg:h-18">
                 <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
                   Change
                 </p>
@@ -141,7 +142,7 @@ function History() {
                 </p>
               </div>
 
-              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
+              <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3 lg:w-32 lg:h-18">
                 <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
                   % Change
                 </p>
@@ -155,11 +156,13 @@ function History() {
                 </p>
               </div>
             </div>
-            <div className="flex mb-3 rounded-lg w-57 bg-neutral-700">
+            <div className="flex items-center mb-3 rounded-lg w-57 bg-neutral-700 lg:h-11">
               {ranges.map((item) => (
                 <button
                   key={item}
-                  onClick={() => setRange(item)}
+                  onClick={() => {
+                    setRange(item);
+                  }}
                   className={`rounded-md px-3 py-3 text-xs transition ${
                     range === item
                       ? "bg-neutral-600 text-white"
@@ -171,7 +174,10 @@ function History() {
               ))}
             </div>
           </div>
-          <div className="bg-neutral-700 h-96 px-2 py-4 rounded-xl">
+          <div
+            ref={chartRef}
+            className="bg-neutral-700 h-96 px-2 py-4 rounded-xl"
+          >
             <span className="text-base">USD/EUR</span>
 
             <ResponsiveContainer width="100%" height="100%">
@@ -212,7 +218,7 @@ function History() {
                 <YAxis
                   domain={[min - padding, max + padding]}
                   tickFormatter={(value) => value.toFixed(4)}
-                  width={50}
+                  width={60}
                   axisLine={false}
                   tickLine={false}
                   tick={{
