@@ -84,7 +84,7 @@ function Converter({
           <p className="flex items-center text-xs lg:w-full">
             {loading
               ? "Loading..."
-              : `1 ${from} = ${(converted / amount).toFixed(4)} ${to}`}
+              : `1 ${from} = ${data.rate.toFixed(4)} ${to}`}
           </p>
 
           {error && <p className="text-xs text-red-400">{error}</p>}

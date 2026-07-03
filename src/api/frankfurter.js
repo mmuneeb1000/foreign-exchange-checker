@@ -1,4 +1,4 @@
-const API_URL = "https://api.frankfurter.dev/v1";
+const API_URL = "https://api.frankfurter.dev/v2";
 
 export async function getCurrencies() {
   const response = await fetch(`${API_URL}/currencies`);
@@ -11,9 +11,7 @@ export async function getCurrencies() {
 }
 
 export async function convertCurrency(from, to, amount) {
-  const response = await fetch(
-    `${API_URL}/latest?amount=${amount}&from=${from}&to=${to}`,
-  );
+  const response = await fetch(`${API_URL}/rate/${from}/${to}`);
 
   if (!response.ok) {
     throw new Error("Failed to convert currency");

@@ -39,7 +39,7 @@ function App() {
 
         const data = await convertCurrency(from, to, amount);
 
-        setConverted(data.rates[to]);
+        setConverted(data.converted);
         setError("");
       } catch {
         setError("Unable to fetch rates.");

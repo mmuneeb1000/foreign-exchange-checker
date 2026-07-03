@@ -70,9 +70,9 @@ const flagMap = {
 function getFlag(currency) {
   const country = flagMap[currency];
 
-  if (!country) return "";
+  if (!country) return null;
 
-  return flags[`../assets/flags/${country}.webp`];
+  return flags[`../assets/images/flags/${country}.webp`] ?? null;
 }
 
 function Dropdown({ currencies, value, onChange }) {
@@ -94,28 +94,31 @@ function Dropdown({ currencies, value, onChange }) {
   }, []);
 
   const filteredCurrencies = useMemo(() => {
-    return Object.entries(currencies).filter(([code, name]) => {
-      const query = search.toLowerCase();
+    const query = search.toLowerCase();
 
+    return Object.entries(currencies).filter(([code, currency]) => {
       return (
-        code.toLowerCase().includes(query) || name.toLowerCase().includes(query)
+        code.toLowerCase().includes(query) ||
+        currency.name.toLowerCase().includes(query)
       );
     });
   }, [currencies, search]);
 
+  const selectedFlag = getFlag(value);
+
   return (
-    <div ref={dropdownRef} className="relative w-full">
+    <div ref={dropdownRef} className="relative">
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="flex w-16 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
+        className="flex w-24 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
       >
         <div className="flex items-center gap-2">
-          {getFlag(value) && (
+          {selectedFlag && (
             <img
-              src={getFlag(value)}
+              src={selectedFlag}
               alt={value}
-              className="h-6 w-6 rounded-full"
+              className="h-5 w-5 rounded-full object-cover"
             />
           )}
 
@@ -124,47 +127,52 @@ function Dropdown({ currencies, value, onChange }) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-60 rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
+        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-xl border border-neutral-700 bg-neutral-800 shadow-xl">
           <div className="border-b border-neutral-700 p-3">
-            <div className="flex items-center gap-2 rounded-lg bg-neutral-700 px-3">
-              <input
-                type="text"
-                placeholder="Search currency..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-transparent py-2 outline-none"
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="Search currency..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg bg-neutral-700 px-3 py-2 outline-none"
+            />
           </div>
 
-          <ul className="max-h-72 overflow-y-auto">
-            {filteredCurrencies.map(([code, name]) => (
-              <li
-                key={code}
-                onClick={() => {
-                  onChange(code);
-                  setSearch("");
-                  setIsOpen(false);
-                }}
-                className="flex cursor-pointer items-center gap-3 px-4 py-3 hover:bg-neutral-700"
-              >
-                {getFlag(code) && (
-                  <img
-                    src={getFlag(code)}
-                    alt={code}
-                    className="h-6 w-6 rounded-full"
-                  />
-                )}
+          <ul className="max-h-80 overflow-y-auto">
+            {filteredCurrencies.map(([code, currency]) => {
+              const flag = getFlag(code);
 
-                <div className="flex flex-col">
-                  <span className="font-medium">{code}</span>
+              return (
+                <li
+                  key={code}
+                  onClick={() => {
+                    onChange(code);
+                    setSearch("");
+                    setIsOpen(false);
+                  }}
+                  className="flex cursor-pointer items-center gap-3 px-4 py-3 hover:bg-neutral-700"
+                >
+                  {flag ? (
+                    <img
+                      src={flag}
+                      alt={code}
+                      className="h-6 w-6 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-6 w-6 rounded-full bg-neutral-600" />
+                  )}
 
-                  <span className="text-xs text-neutral-200">{name}</span>
-                </div>
-              </li>
-            ))}
+                  <div className="flex flex-col">
+                    <span className="font-medium">{code}</span>
+                    <span className="text-xs text-neutral-300">
+                      {currency.name}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
 
-            {!filteredCurrencies.length && (
+            {filteredCurrencies.length === 0 && (
               <li className="px-4 py-6 text-center text-sm text-neutral-400">
                 No currencies found.
               </li>
