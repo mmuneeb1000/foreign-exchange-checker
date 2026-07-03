@@ -5,6 +5,7 @@ function Converter({
   currencies,
   from,
   to,
+  rate,
   setFrom,
   setTo,
   amount,
@@ -82,9 +83,7 @@ function Converter({
         border-t border-neutral-500 border-dashed lg:flex-row"
         >
           <p className="flex items-center text-xs lg:w-full">
-            {loading
-              ? "Loading..."
-              : `1 ${from} = ${data.rate.toFixed(4)} ${to}`}
+            {loading ? "Loading..." : `1 ${from} = ${rate.toFixed(4)} ${to}`}
           </p>
 
           {error && <p className="text-xs text-red-400">{error}</p>}

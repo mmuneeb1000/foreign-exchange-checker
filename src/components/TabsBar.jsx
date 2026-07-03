@@ -1,8 +1,3 @@
-import Compare from "./ToggleMenu/Compare";
-import History from "./ToggleMenu/History";
-import Log from "./ToggleMenu/Log";
-import Favorites from "./ToggleMenu/Favorites";
-
 function TabsBar() {
   return (
     <section className="py-2">

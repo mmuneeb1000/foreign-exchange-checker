@@ -11,7 +11,7 @@ function App() {
 
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
-
+  const [rate, setRate] = useState(0);
   const [amount, setAmount] = useState(1000);
   const [converted, setConverted] = useState(0);
   const [favorite, setFavorite] = useState(false);
@@ -33,22 +33,26 @@ function App() {
   }, []);
 
   useEffect(() => {
-    async function convert() {
+    if (!from || !to || amount <= 0) return;
+
+    const timer = setTimeout(async () => {
       try {
         setLoading(true);
 
         const data = await convertCurrency(from, to, amount);
 
         setConverted(data.converted);
+        setRate(data.rate);
         setError("");
-      } catch {
+      } catch (err) {
+        console.error(err);
         setError("Unable to fetch rates.");
       } finally {
         setLoading(false);
       }
-    }
+    }, 300);
 
-    convert();
+    return () => clearTimeout(timer);
   }, [amount, from, to]);
 
   return (
@@ -69,6 +73,7 @@ function App() {
           favorite={favorite}
           setFavorite={setFavorite}
           error={error}
+          rate={rate}
         />
         <TabsBar />
       </main>

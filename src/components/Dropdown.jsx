@@ -1,79 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-
-const flags = import.meta.glob("../assets/images/flags/*.webp", {
-  eager: true,
-  import: "default",
-});
-
-const flagMap = {
-  AED: "ae",
-  ARS: "ar",
-  AUD: "au",
-  BDT: "bd",
-  BGN: "bg",
-  BHD: "bh",
-  BRL: "br",
-  CAD: "ca",
-  CHF: "ch",
-  CLP: "cl",
-  CNY: "cn",
-  COP: "co",
-  CYP: "cy",
-  CZK: "cz",
-  DKK: "dk",
-  EGP: "eg",
-  EUR: "eu",
-  GBP: "gb",
-  HKD: "hk",
-  HNL: "hn",
-  HRK: "hr",
-  HTG: "ht",
-  HUF: "hu",
-  IDR: "id",
-  INR: "in",
-  ISK: "is",
-  JOD: "jo",
-  JPY: "jp",
-  KES: "ke",
-  KRW: "kr",
-  KWD: "kw",
-  LBP: "lb",
-  XCD: "lc",
-  LKR: "lk",
-  MAD: "ma",
-  MXN: "mx",
-  MYR: "my",
-  NGN: "ng",
-  NOK: "no",
-  NPR: "np",
-  NZD: "nz",
-  OMR: "om",
-  PEN: "pe",
-  PHP: "ph",
-  PKR: "pk",
-  PLN: "pl",
-  QAR: "qa",
-  RON: "ro",
-  RUB: "ru",
-  SAR: "sa",
-  SEK: "se",
-  SGD: "sg",
-  THB: "th",
-  TRY: "tr",
-  TWD: "tw",
-  UAH: "ua",
-  USD: "us",
-  VND: "vn",
-  ZAR: "za",
-};
-
-function getFlag(currency) {
-  const country = flagMap[currency];
-
-  if (!country) return null;
-
-  return flags[`../assets/images/flags/${country}.webp`] ?? null;
-}
+import getFlag from "../utils/getFlag";
 
 function Dropdown({ currencies, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,9 +22,9 @@ function Dropdown({ currencies, value, onChange }) {
   const filteredCurrencies = useMemo(() => {
     const query = search.toLowerCase();
 
-    return Object.entries(currencies).filter(([code, currency]) => {
+    return currencies.filter((currency) => {
       return (
-        code.toLowerCase().includes(query) ||
+        currency.iso_code.toLowerCase().includes(query) ||
         currency.name.toLowerCase().includes(query)
       );
     });
@@ -114,16 +40,20 @@ function Dropdown({ currencies, value, onChange }) {
         className="flex w-24 items-center justify-between rounded-lg border border-neutral-500 bg-neutral-700 px-3 py-2"
       >
         <div className="flex items-center gap-2">
-          {selectedFlag && (
+          {selectedFlag ? (
             <img
               src={selectedFlag}
               alt={value}
-              className="h-5 w-5 rounded-full object-cover"
+              className="h-6 w-6 rounded-full object-cover"
             />
+          ) : (
+            <div className="h-6 w-6 rounded-full bg-neutral-600" />
           )}
 
           <span>{value}</span>
         </div>
+
+        <span>▼</span>
       </button>
 
       {isOpen && (
@@ -139,14 +69,14 @@ function Dropdown({ currencies, value, onChange }) {
           </div>
 
           <ul className="max-h-80 overflow-y-auto">
-            {filteredCurrencies.map(([code, currency]) => {
-              const flag = getFlag(code);
+            {filteredCurrencies.map((currency) => {
+              const flag = getFlag(currency.iso_code);
 
               return (
                 <li
-                  key={code}
+                  key={currency.iso_code}
                   onClick={() => {
-                    onChange(code);
+                    onChange(currency.iso_code);
                     setSearch("");
                     setIsOpen(false);
                   }}
@@ -155,7 +85,7 @@ function Dropdown({ currencies, value, onChange }) {
                   {flag ? (
                     <img
                       src={flag}
-                      alt={code}
+                      alt={currency.iso_code}
                       className="h-6 w-6 rounded-full object-cover"
                     />
                   ) : (
@@ -163,7 +93,8 @@ function Dropdown({ currencies, value, onChange }) {
                   )}
 
                   <div className="flex flex-col">
-                    <span className="font-medium">{code}</span>
+                    <span className="font-medium">{currency.iso_code}</span>
+
                     <span className="text-xs text-neutral-300">
                       {currency.name}
                     </span>
