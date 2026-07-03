@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { getHistory } from "../../api/frankfurter";
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -14,7 +14,10 @@ function History() {
   const [historyData, setHistoryData] = useState([]);
 
   const chartData = historyData.map((item) => ({
-    date: item.date,
+    date: new Date(item.date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    }),
     rate: item.rate,
   }));
   const rates = chartData.map((d) => d.rate);
@@ -95,7 +98,7 @@ function History() {
   }, [range]);
 
   return (
-    <section className="flex flex-col gap-2 justify-center items-center lg:w-200 mx-auto">
+    <section className="flex flex-col gap-2 justify-center items-center mx-auto">
       {loading && <p>Loading history...</p>}
       {!loading && error && (
         <div>
@@ -107,8 +110,8 @@ function History() {
         </div>
       )}
       {!loading && !error && (
-        <div className=" w-full">
-          <div className=" lg:flex ">
+        <div className=" w-full ">
+          <div className=" lg:flex lg:w-full ">
             <div className="mb-3 grid grid-cols-2 gap-2 lg:flex">
               <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3">
                 <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
@@ -168,14 +171,37 @@ function History() {
               ))}
             </div>
           </div>
-          <div className="bg-neutral-600 h-96 p-4 rounded-xl">
+          <div className="bg-neutral-700 h-96 px-2 py-4 rounded-xl">
             <span className="text-base">USD/EUR</span>
 
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="1 3" vertical={false} />
+              <AreaChart data={chartData}>
+                <defs>
+                  <linearGradient id="rate" x1="0" y1="0" x2="0" y2="1">
+                    <stop
+                      offset="5%"
+                      stopColor="hsl(71, 92%, 60%)"
+                      stopOpacity={0.8}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="hsl(71, 92%, 60%)"
+                      stopOpacity={0}
+                    />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid
+                  vertical={false}
+                  horizontal={true}
+                  stroke="#262626"
+                  strokeDasharray="3 3"
+                  tickCount={3}
+                />
                 <XAxis
                   dataKey="date"
+                  height={40}
+                  axisLine={false}
+                  tickLine={false}
                   tick={{
                     fill: "#737373",
                     fontSize: 11,
@@ -186,12 +212,16 @@ function History() {
                 <YAxis
                   domain={[min - padding, max + padding]}
                   tickFormatter={(value) => value.toFixed(4)}
+                  width={50}
+                  axisLine={false}
+                  tickLine={false}
                   tick={{
                     fill: "#737373",
                     fontSize: 11,
                     fontWeight: 600,
                   }}
                 />
+
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#171717",
@@ -203,18 +233,19 @@ function History() {
                     color: "#d4d4d4",
                   }}
                   itemStyle={{
-                    color: "#84cc16",
+                    color: "hsl(71, 92%, 60%)",
                   }}
                 />
 
-                <Line
+                <Area
                   type="monotone"
                   dataKey="rate"
                   stroke="hsl(71, 92%, 60%)"
                   strokeWidth={2}
                   dot={false}
+                  fill="url(#rate)"
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>

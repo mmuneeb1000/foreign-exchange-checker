@@ -56,7 +56,7 @@ function TabsBar() {
       </div>
 
       {/* Desktop */}
-      <div className="hidden lg:flex">
+      <div className="hidden lg:flex ">
         <ul className="flex gap-4">
           {tabs.map((tab) => (
             <li
