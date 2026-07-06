@@ -13,22 +13,15 @@ function Converter({
   converted,
   loading,
   favorite,
-  setFavorite,
   error,
+  toggleFavorite,
+  logConversion,
 }) {
   function swapCurrencies() {
     setFrom(to);
     setTo(from);
   }
-  function logConversion() {
-    console.log({
-      from,
-      to,
-      amount,
-      converted,
-      date: new Date().toISOString(),
-    });
-  }
+
   return (
     <section className="bg-neutral-900 flex flex-col ">
       <h2 className="text-base uppercase">Check The Rate</h2>
@@ -90,7 +83,7 @@ function Converter({
 
           <div className="flex justify-center gap-2 my-2">
             <button
-              onClick={() => setFavorite(!favorite)}
+              onClick={toggleFavorite}
               className={`text-xs px-2 py-1 rounded-lg ${
                 favorite
                   ? "bg-lime-500 text-neutral-900"
@@ -101,7 +94,7 @@ function Converter({
             </button>
 
             <button
-              onClick={logConversion}
+              onClick={() => logConversion(converted)}
               className="text-xs px-2 py-1 border border-lime-500 rounded-lg whitespace-nowrap"
             >
               Log Conversion

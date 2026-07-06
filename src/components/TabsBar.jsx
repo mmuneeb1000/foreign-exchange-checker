@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import History from "./TabsMenu/History";
 import Compare from "./TabsMenu/Compare";
 import Favorites from "./TabsMenu/Favorites";
 import Log from "./TabsMenu/Log";
 
-function TabsBar() {
-  // const [favoriteCount] = useState(0);
-  // const [logCount] = useState(0);
+function TabsBar({
+  from,
+  to,
+  setFrom,
+  setTo,
+  favorites,
+  setFavorites,
+  conversionLog,
+  setConversionLog,
+}) {
   const [activeTab, setActiveTab] = useState("History");
 
   const tabs = [
     {
       id: "History",
       label: "History",
-      component: <History />,
+      component: <History from={from} to={to} />,
     },
     {
       id: "Compare",
@@ -23,14 +30,26 @@ function TabsBar() {
     {
       id: "Favorites",
       label: "Favorites",
-      component: <Favorites />,
-      count: 0,
+      component: (
+        <Favorites
+          favorites={favorites}
+          setFavorites={setFavorites}
+          setFrom={setFrom}
+          setTo={setTo}
+        />
+      ),
+      count: favorites.length,
     },
     {
       id: "Log",
       label: "Log",
-      component: <Log />,
-      count: 0,
+      component: (
+        <Log
+          conversionLog={conversionLog}
+          setConversionLog={setConversionLog}
+        />
+      ),
+      count: conversionLog.length,
     },
   ];
 
@@ -38,7 +57,6 @@ function TabsBar() {
 
   return (
     <section className="py-2">
-      {/* Mobile */}
       <div className="lg:hidden">
         <select
           name="toggle"
@@ -55,7 +73,6 @@ function TabsBar() {
         </select>
       </div>
 
-      {/* Desktop */}
       <div className="hidden lg:flex ">
         <ul className="flex gap-4">
           {tabs.map((tab) => (
@@ -80,7 +97,6 @@ function TabsBar() {
         </ul>
       </div>
 
-      {/* Active tab content */}
       <div className="mt-6">{activeComponent}</div>
     </section>
   );

@@ -13,11 +13,51 @@ function App() {
   const [rate, setRate] = useState(0);
   const [amount, setAmount] = useState(1000);
   const [converted, setConverted] = useState(0);
-  const [favorite, setFavorite] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [conversionLog, setConversionLog] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const favorite = favorites.some(
+    (item) => item.from === from && item.to === to,
+  );
 
+  function logConversion(convertedAmount) {
+    setConversionLog((prev) => [
+      {
+        id: crypto.randomUUID(),
+        from,
+        to,
+        amount,
+        converted: convertedAmount,
+        date: new Date().toISOString(),
+      },
+      ...prev,
+    ]);
+  }
+  function toggleFavorite() {
+    setFavorites((prev) => {
+      const exists = prev.some((item) => item.from === from && item.to === to);
+
+      if (exists) {
+        return prev.filter((item) => !(item.from === from && item.to === to));
+      }
+
+      return [...prev, { from, to }];
+    });
+  }
+  useEffect(() => {
+    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
+
+    setConversionLog(JSON.parse(localStorage.getItem("conversionLog")) || []);
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
+    localStorage.setItem("conversionLog", JSON.stringify(conversionLog));
+  }, [conversionLog]);
   useEffect(() => {
     async function loadCurrencies() {
       try {
@@ -70,11 +110,21 @@ function App() {
           converted={converted}
           loading={loading}
           favorite={favorite}
-          setFavorite={setFavorite}
           error={error}
           rate={rate}
+          toggleFavorite={toggleFavorite}
+          logConversion={logConversion}
         />
-        <TabsBar />
+        <TabsBar
+          from={from}
+          setFrom={setFrom}
+          to={to}
+          setTo={setTo}
+          favorites={favorites}
+          conversionLog={conversionLog}
+          setFavorites={setFavorites}
+          setConversionLog={setConversionLog}
+        />
       </main>
       <Footer />
     </>

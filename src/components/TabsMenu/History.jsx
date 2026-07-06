@@ -10,7 +10,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-function History() {
+function History({ from, to }) {
   const [historyData, setHistoryData] = useState([]);
 
   const chartData = historyData.map((item) => ({
@@ -93,8 +93,8 @@ function History() {
         const data = await getHistory({
           from: startDate,
           to: endDate,
-          base: "USD",
-          quotes: "EUR",
+          base: from,
+          quotes: to,
         });
 
         setHistoryData(data);
@@ -107,7 +107,7 @@ function History() {
     }
 
     loadHistory();
-  }, [range]);
+  }, [range, from, to]);
 
   return (
     <section className="flex flex-col gap-2 justify-center items-center mx-auto">
@@ -187,9 +187,11 @@ function History() {
           </div>
           <div
             ref={chartRef}
-            className="bg-neutral-700 h-96 px-2 py-4 rounded-xl"
+            className="flex flex-col gap-1 bg-neutral-700 h-96 px-2 py-4 rounded-xl"
           >
-            <span className="text-base">USD/EUR</span>
+            <span className="text-base ">
+              {from}/{to}
+            </span>
 
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
