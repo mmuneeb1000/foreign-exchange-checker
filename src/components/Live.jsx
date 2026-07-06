@@ -1,24 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMarketTicker } from "../api/frankfurter";
 
-const marketPairs = [
-  ["EUR", "USD"],
-  ["GBP", "USD"],
-  ["USD", "JPY"],
-  ["USD", "CHF"],
-  ["USD", "CAD"],
-  ["AUD", "USD"],
-  ["NZD", "USD"],
-  ["EUR", "GBP"],
-  ["EUR", "JPY"],
-  ["GBP", "JPY"],
-  ["EUR", "CHF"],
-  ["AUD", "JPY"],
-];
-
-function Live() {
-  const [markets, setMarkets] = useState([]);
-
+function Live({ marketPairs, markets, setMarkets }) {
   useEffect(() => {
     async function loadMarkets() {
       try {
@@ -56,7 +39,7 @@ function Live() {
 
   return (
     <section className="mt-2 flex overflow-hidden border-y border-neutral-700 bg-neutral-800">
-      <div className="shrink-0 bg-lime-500 px-3 py-2 text-xs font-semibold uppercase text-neutral-900">
+      <div className="shrink-0 bg-lime-500 px-3 py-3 text-xs font-semibold uppercase text-neutral-900">
         Live Markets
       </div>
 

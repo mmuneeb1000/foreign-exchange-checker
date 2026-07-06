@@ -145,7 +145,7 @@ function History({ from, to }) {
                 </p>
                 <p
                   className={`text-lg font-medium ${
-                    change >= 0 ? "text-lime-400" : "text-red-400"
+                    change >= 0 ? "text-lime-500" : "text-red-400"
                   }`}
                 >
                   {change >= 0 ? "+" : ""}
@@ -159,7 +159,7 @@ function History({ from, to }) {
                 </p>
                 <p
                   className={`text-lg font-medium ${
-                    percentChange >= 0 ? "text-lime-400" : "text-red-400"
+                    percentChange >= 0 ? "text-lime-500" : "text-red-400"
                   }`}
                 >
                   {percentChange >= 0 ? "▲ +" : "▼ "}

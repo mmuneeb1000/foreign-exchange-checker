@@ -14,6 +14,8 @@ function TabsBar({
   conversionLog,
   setConversionLog,
   presetCurrencies,
+  converted,
+  amount,
 }) {
   const [activeTab, setActiveTab] = useState("History");
 
@@ -34,6 +36,8 @@ function TabsBar({
           to={to}
           from={from}
           presetCurrencies={presetCurrencies}
+          converted={converted}
+          amount={amount}
         />
       ),
     },
@@ -46,6 +50,7 @@ function TabsBar({
           setFavorites={setFavorites}
           setFrom={setFrom}
           setTo={setTo}
+          amount={amount}
         />
       ),
       count: favorites.length,
@@ -73,7 +78,7 @@ function TabsBar({
           id="toggle"
           value={activeTab}
           onChange={(e) => setActiveTab(e.target.value)}
-          className="w-full rounded-xl border border-neutral-300 bg-neutral-700 px-2 py-2"
+          className="w-full rounded-xl border uppercase border-neutral-300 bg-neutral-700 px-2 py-2"
         >
           {tabs.map((tab) => (
             <option key={tab.id} value={tab.id}>
@@ -89,7 +94,7 @@ function TabsBar({
             <li
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex cursor-pointer items-center gap-2 px-3 py-2 ${
+              className={`flex cursor-pointer items-center uppercase gap-2 px-3 py-2 ${
                 activeTab === tab.id
                   ? "border-b-3 border-lime-500 text-white"
                   : "border-b-3 border-neutral-900 text-neutral-100"

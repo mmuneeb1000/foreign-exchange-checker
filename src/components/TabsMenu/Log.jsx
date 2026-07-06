@@ -1,8 +1,45 @@
 import { useEffect, useState } from "react";
+import deleteIcon from "../../assets/images/icon-delete.svg";
 
 function Log({ conversionLog, setConversionLog }) {
   function clearLog() {
     setConversionLog([]);
+  }
+  function removeLog(id) {
+    setConversionLog((prev) => prev.filter((item) => item.id !== id));
+  }
+  function getRelativeTime(date) {
+    const now = new Date();
+    const then = new Date(date);
+
+    const diff = Math.floor((now - then) / 1000);
+
+    if (diff < 60) {
+      return `${diff}S`;
+    }
+
+    const minutes = Math.floor(diff / 60);
+    if (minutes < 60) {
+      return `${minutes}M`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+      return `${hours}H`;
+    }
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) {
+      return `${days}D`;
+    }
+
+    const months = Math.floor(days / 30);
+    if (months < 12) {
+      return `${months}MO`;
+    }
+
+    const years = Math.floor(months / 12);
+    return `${years}Y`;
   }
   if (conversionLog.length === 0) {
     return (
@@ -17,33 +54,42 @@ function Log({ conversionLog, setConversionLog }) {
   }
   return (
     <>
-      <div className="mb-4 flex justify-end">
-        <button
-          onClick={clearLog}
-          className="rounded-lg border border-red-500 px-3 py-2 text-sm text-red-400"
-        >
-          Clear Log
-        </button>
-      </div>
-
-      <div className="space-y-3">
+      <div className="space-y-3 rounded-xl bg-neutral-700 p-4">
+        <div className="mb-4 flex justify-between">
+          <h3 className="uppercase">Conversion Log</h3>
+          <button
+            onClick={clearLog}
+            className="rounded-lg border uppercase border-neutral-200 px-2 py-1 text-xs text-neutral-200"
+          >
+            Clear All
+          </button>
+        </div>
         {conversionLog.map((item) => (
           <div
             key={item.id}
-            className="rounded-xl border border-neutral-700 bg-neutral-800 p-4"
+            className="flex rounded-xl justify-between items-center border border-neutral-700 bg-neutral-600 p-4"
           >
-            <div className="flex justify-between">
-              <span className="font-medium">
-                {item.amount} {item.from}
+            <div className="flex flex-col lg:flex-row lg:gap-4  justify-between">
+              <span className="text-base text-neutral-300">
+                {getRelativeTime(item.date)}
               </span>
-
-              <span className="text-neutral-400">
-                {new Date(item.date).toLocaleString()}
-              </span>
+              <h4 className=" text-white">
+                {item.from} → {item.to}
+              </h4>
             </div>
-
-            <div className="mt-2 text-lime-400">
-              {item.converted} {item.to}
+            <div className="flex gap-4">
+              <div className="flex flex-col items-center lg:flex-row lg:gap-4 justify-between text-right">
+                <span className="text-base font-medium">{item.amount}</span>
+                <span className="text-base text-lime-500">
+                  {item.converted}
+                </span>
+              </div>
+              <button
+                onClick={() => removeLog(item.id)}
+                className="rounded-lg items-center border border-neutral-300 px-2 py-2 text-xs"
+              >
+                <img src={deleteIcon} />
+              </button>
             </div>
           </div>
         ))}

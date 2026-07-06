@@ -45,32 +45,59 @@ export async function getMarketTicker(pairs) {
 
   const results = await Promise.all(
     pairs.map(async ([base, quote]) => {
-      const latestRes = await fetch(
-        `${API_URL}/v1/latest?base=${base}&symbols=${quote}`,
-      );
+      try {
+        const latestRes = await fetch(
+          `${API_URL}/v1/latest?base=${base}&symbols=${quote}`,
+        );
 
-      const latestJson = await latestRes.json();
+        const latestJson = await latestRes.json();
 
-      const latestRate = latestJson.rates[quote];
+        if (!latestJson.rates?.[quote]) {
+          return {
+            base,
+            quote,
+            supported: false,
+            message: "Unsupported",
+          };
+        }
 
-      const previousRes = await fetch(
-        `${API_URL}/v1/${previousDate}?base=${base}&symbols=${quote}`,
-      );
+        const latestRate = latestJson.rates[quote];
 
-      const previousJson = await previousRes.json();
+        const previousRes = await fetch(
+          `${API_URL}/v1/${previousDate}?base=${base}&symbols=${quote}`,
+        );
 
-      const previousRate = previousJson.rates[quote];
+        const previousJson = await previousRes.json();
 
-      const change = latestRate - previousRate;
+        if (!previousJson.rates?.[quote]) {
+          return {
+            base,
+            quote,
+            supported: false,
+            message: "No history",
+          };
+        }
 
-      return {
-        base,
-        quote,
-        rate: latestRate,
-        previousRate,
-        change,
-        percent: (change / previousRate) * 100,
-      };
+        const previousRate = previousJson.rates[quote];
+        const change = latestRate - previousRate;
+
+        return {
+          base,
+          quote,
+          rate: latestRate,
+          previousRate,
+          change,
+          percent: (change / previousRate) * 100,
+          supported: true,
+        };
+      } catch {
+        return {
+          base,
+          quote,
+          supported: false,
+          message: "Error",
+        };
+      }
     }),
   );
 

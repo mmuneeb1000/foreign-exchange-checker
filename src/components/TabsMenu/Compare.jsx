@@ -1,7 +1,19 @@
 import { useEffect, useState } from "react";
 import { convertCurrency } from "../../api/frankfurter";
+import getFlag from "../../utils/getFlag";
+import FavoriteFilled from "../../assets/images/icon-star-filled.svg";
+import FavoriteOutline from "../../assets/images/icon-star.svg";
 
-function Compare({ presetCurrencies, from, to, favorites, setFrom, setTo }) {
+function Compare({
+  presetCurrencies,
+  from,
+  to,
+  favorites,
+  setFrom,
+  setTo,
+  converted,
+  amount,
+}) {
   const [rates, setRates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,13 +24,14 @@ function Compare({ presetCurrencies, from, to, favorites, setFrom, setTo }) {
       try {
         const results = await Promise.all(
           presetCurrencies
-            .filter((currency) => currency !== from)
+            .filter((currency) => currency.code !== from)
             .map(async (currency) => {
-              const data = await convertCurrency(from, currency, 1);
+              const data = await convertCurrency(from, currency.code, amount);
 
               return {
-                currency,
+                ...currency,
                 rate: data.rate,
+                converted: data.converted,
               };
             }),
         );
@@ -30,70 +43,75 @@ function Compare({ presetCurrencies, from, to, favorites, setFrom, setTo }) {
     }
 
     loadRates();
-  }, [from, presetCurrencies]);
+  }, [from, amount, presetCurrencies]);
 
-  function isFavorite(currency) {
-    return favorites.some((item) => item.from === from && item.to === currency);
+  function isFavorite(currencyCode) {
+    return favorites.some(
+      (item) => item.from === from && item.to === currencyCode,
+    );
   }
 
   if (loading) {
     return (
-      <section
-        className="flex flex-col gap-2 justify-center items-center 
-    h-40 lg:w-100 mx-auto"
-      >
-        <h2 className="text-base">No comparison available</h2>
-        <p className="text-neutral-200 text-center">
-          Enter an amount in Send above to see what your money is worth in other
-          currencies.
-        </p>
+      <section className="rounded-xl bg-neutral-800 p-6 text-center">
+        <h2 className="text-lg font-medium">Loading comparisons...</h2>
       </section>
     );
   }
 
   return (
-    <section
-      className="flex flex-col gap-2 justify-center items-center 
-    h-40 lg:w-100 mx-auto"
-    >
-      <div className="space-y-3">
+    <section>
+      <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700">
+        <p className="text-base uppercase text-white my-2">
+          <span className="text-neutral-200">Multi Currency: </span>
+          {amount.toLocaleString()} from {from}
+        </p>
         {rates.map((item) => (
           <div
-            key={item.currency}
-            className="flex items-center justify-between rounded-xl border border-neutral-700 bg-neutral-800 p-4"
+            key={item.code}
+            className="flex  items-center justify-between rounded-xl border border-neutral-700 bg-neutral-600 p-3"
           >
-            <div>
-              <h3 className="font-medium">
-                {from} → {item.currency}
-              </h3>
+            <div className="flex items-center gap-5">
+              <img
+                src={getFlag(item.code)}
+                alt={item.name}
+                className="h-6 w-6 rounded-full border border-neutral-700 object-cover"
+              />
 
-              <p className="mt-1 text-lime-400">
-                1 {from} = {item.rate.toFixed(4)} {item.currency}
-              </p>
+              <div>
+                <h4 className="font-medium ">{item.code}</h4>
+
+                <p className="text-xs text-neutral-100">{item.name}</p>
+              </div>
             </div>
 
             <div className="flex items-center gap-3">
-              {isFavorite(item.currency) && (
-                <span className="rounded-full bg-lime-500 px-2 py-1 text-xs text-neutral-900">
-                  ★
-                </span>
-              )}
+              <div className="text-right">
+                <p className="text-sm font-semibold text-white">
+                  {item.converted.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                  {item.code}
+                </p>
 
-              {to === item.currency && (
-                <span className="rounded-full bg-blue-600 px-2 py-1 text-xs">
-                  Active
-                </span>
-              )}
-
-              <button
-                onClick={() => {
-                  setFrom(from);
-                  setTo(item.currency);
-                }}
-                className="rounded-lg border border-lime-500 px-3 py-2 text-sm"
+                <p className="text-xs text-neutral-200">
+                  @ {item.rate.toFixed(4)}
+                </p>
+              </div>
+              <span
+                className={`rounded-lg px-2 py-2 text-xs ${
+                  isFavorite(item.code)
+                    ? "bg-neutral-700 text-neutral-900 border-2 border-lime-500"
+                    : "bg-neutral-700 text-neutral-300 border-2 border-neutral-700"
+                }`}
               >
-                Select
-              </button>
+                <img
+                  src={isFavorite(item.code) ? FavoriteFilled : FavoriteOutline}
+                  alt={isFavorite(item.code) ? "Favorited" : "Not favorited"}
+                  className="h-5 w-5"
+                />
+              </span>
             </div>
           </div>
         ))}

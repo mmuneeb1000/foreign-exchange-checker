@@ -34,8 +34,8 @@ function Converter({
         lg:flex-row"
         >
           <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
-            <h3 className="text-neutral-200">Send</h3>
-            <div className="flex space-around">
+            <h4 className="text-neutral-200 uppercase">Send</h4>
+            <div className="flex space-around ">
               <input
                 type="number"
                 value={amount}
@@ -59,7 +59,7 @@ function Converter({
             </button>
           </div>
           <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
-            <h3 className="text-neutral-200">Recieve</h3>
+            <h4 className="text-neutral-200 uppercase">Recieve</h4>
             <div className="flex space-around">
               <input
                 readOnly
@@ -84,7 +84,7 @@ function Converter({
           <div className="flex justify-center gap-2 my-2">
             <button
               onClick={toggleFavorite}
-              className={`text-xs px-2 py-1 rounded-lg ${
+              className={`text-xs px-2 py-1 rounded-lg uppercase ${
                 favorite
                   ? "bg-lime-500 text-neutral-900"
                   : "border-2 border-neutral-300 text-neutral-200"
@@ -95,7 +95,7 @@ function Converter({
 
             <button
               onClick={() => logConversion(converted)}
-              className="text-xs px-2 py-1 border border-lime-500 rounded-lg whitespace-nowrap"
+              className="text-xs px-2 py-1 border uppercase border-lime-500 rounded-lg whitespace-nowrap"
             >
               Log Conversion
             </button>

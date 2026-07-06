@@ -13,20 +13,63 @@ function App() {
   const [rate, setRate] = useState(0);
   const [amount, setAmount] = useState(1000);
   const [converted, setConverted] = useState(0);
-  const [favorites, setFavorites] = useState([]);
-  const [conversionLog, setConversionLog] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(localStorage.getItem("favorites")) || [];
+  });
+
+  const [conversionLog, setConversionLog] = useState(() => {
+    return JSON.parse(localStorage.getItem("conversionLog")) || [];
+  });
 
   const presetCurrencies = [
-    "USD",
-    "EUR",
-    "GBP",
-    "JPY",
-    "CHF",
-    "CAD",
-    "AUD",
-    "CNY",
+    {
+      code: "USD",
+      name: "US Dollar",
+    },
+    {
+      code: "EUR",
+      name: "Euro",
+    },
+    {
+      code: "GBP",
+      name: "British Pound",
+    },
+    {
+      code: "JPY",
+      name: "Japanese Yen",
+    },
+    {
+      code: "CHF",
+      name: "Swiss Franc",
+    },
+    {
+      code: "CAD",
+      name: "Canadian Dollar",
+    },
+    {
+      code: "AUD",
+      name: "Australian Dollar",
+    },
+    {
+      code: "CNY",
+      name: "Chinese Yuan",
+    },
   ];
-
+  const marketPairs = [
+    ["EUR", "USD"],
+    ["GBP", "USD"],
+    ["USD", "JPY"],
+    ["USD", "CHF"],
+    ["USD", "CAD"],
+    ["AUD", "USD"],
+    ["NZD", "USD"],
+    ["EUR", "GBP"],
+    ["EUR", "JPY"],
+    ["GBP", "JPY"],
+    ["EUR", "CHF"],
+    ["AUD", "JPY"],
+  ];
+  const [markets, setMarkets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const favorite = favorites.some(
@@ -58,11 +101,6 @@ function App() {
     });
   }
 
-  useEffect(() => {
-    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
-
-    setConversionLog(JSON.parse(localStorage.getItem("conversionLog")) || []);
-  }, []);
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
@@ -110,7 +148,11 @@ function App() {
   return (
     <>
       <Header />
-      <Live />
+      <Live
+        marketPairs={marketPairs}
+        markets={markets}
+        setMarkets={setMarkets}
+      />
       <main className="px-4 py-8 lg:w-230 lg:mx-auto">
         <Converter
           currencies={currencies}
@@ -138,6 +180,8 @@ function App() {
           setFavorites={setFavorites}
           setConversionLog={setConversionLog}
           presetCurrencies={presetCurrencies}
+          converted={converted}
+          amount={amount}
         />
       </main>
       <Footer />
