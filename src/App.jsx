@@ -16,6 +16,17 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [conversionLog, setConversionLog] = useState([]);
 
+  const presetCurrencies = [
+    "USD",
+    "EUR",
+    "GBP",
+    "JPY",
+    "CHF",
+    "CAD",
+    "AUD",
+    "CNY",
+  ];
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const favorite = favorites.some(
@@ -46,6 +57,7 @@ function App() {
       return [...prev, { from, to }];
     });
   }
+
   useEffect(() => {
     setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
 
@@ -58,6 +70,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("conversionLog", JSON.stringify(conversionLog));
   }, [conversionLog]);
+
   useEffect(() => {
     async function loadCurrencies() {
       try {
@@ -124,6 +137,7 @@ function App() {
           conversionLog={conversionLog}
           setFavorites={setFavorites}
           setConversionLog={setConversionLog}
+          presetCurrencies={presetCurrencies}
         />
       </main>
       <Footer />

@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Favorites({ setFrom, setTo }) {
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    loadFavorites();
-  }, []);
-
+function Favorites({ setFrom, setTo, favorites, setFavorites }) {
   function loadFavorites() {
     const stored = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -21,6 +15,9 @@ function Favorites({ setFrom, setTo }) {
     localStorage.setItem("favorites", JSON.stringify(updated));
     setFavorites(updated);
   }
+  useEffect(() => {
+    loadFavorites();
+  }, []);
 
   if (favorites.length === 0) {
     return (

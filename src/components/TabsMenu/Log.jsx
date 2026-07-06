@@ -1,24 +1,10 @@
 import { useEffect, useState } from "react";
 
-function Log() {
-  const [log, setLog] = useState([]);
-
-  useEffect(() => {
-    loadLog();
-  }, []);
-
-  function loadLog() {
-    const stored = JSON.parse(localStorage.getItem("conversionLog")) || [];
-
-    setLog(stored);
-  }
-
+function Log({ conversionLog, setConversionLog }) {
   function clearLog() {
-    localStorage.removeItem("conversionLog");
-    setLog([]);
+    setConversionLog([]);
   }
-
-  if (log.length === 0) {
+  if (conversionLog.length === 0) {
     return (
       <section className="flex flex-col gap-2 justify-center items-center h-40 lg:w-100 mx-auto">
         <h2 className="text-base"> No conversions logged yet</h2>
@@ -41,7 +27,7 @@ function Log() {
       </div>
 
       <div className="space-y-3">
-        {log.map((item) => (
+        {conversionLog.map((item) => (
           <div
             key={item.id}
             className="rounded-xl border border-neutral-700 bg-neutral-800 p-4"

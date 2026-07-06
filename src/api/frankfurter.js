@@ -36,3 +36,43 @@ export async function getHistory({ from, to, base, quotes }) {
 
   return response.json();
 }
+
+export async function getMarketTicker(pairs) {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const previousDate = yesterday.toISOString().split("T")[0];
+
+  const results = await Promise.all(
+    pairs.map(async ([base, quote]) => {
+      const latestRes = await fetch(
+        `${API_URL}/v1/latest?base=${base}&symbols=${quote}`,
+      );
+
+      const latestJson = await latestRes.json();
+
+      const latestRate = latestJson.rates[quote];
+
+      const previousRes = await fetch(
+        `${API_URL}/v1/${previousDate}?base=${base}&symbols=${quote}`,
+      );
+
+      const previousJson = await previousRes.json();
+
+      const previousRate = previousJson.rates[quote];
+
+      const change = latestRate - previousRate;
+
+      return {
+        base,
+        quote,
+        rate: latestRate,
+        previousRate,
+        change,
+        percent: (change / previousRate) * 100,
+      };
+    }),
+  );
+
+  return results;
+}

@@ -13,6 +13,7 @@ function TabsBar({
   setFavorites,
   conversionLog,
   setConversionLog,
+  presetCurrencies,
 }) {
   const [activeTab, setActiveTab] = useState("History");
 
@@ -25,7 +26,16 @@ function TabsBar({
     {
       id: "Compare",
       label: "Compare",
-      component: <Compare />,
+      component: (
+        <Compare
+          favorites={favorites}
+          setFrom={setFrom}
+          setTo={setTo}
+          to={to}
+          from={from}
+          presetCurrencies={presetCurrencies}
+        />
+      ),
     },
     {
       id: "Favorites",
