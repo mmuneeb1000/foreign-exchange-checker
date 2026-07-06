@@ -40,3 +40,31 @@ body {
   color: var(--color-white);
   font-size: 0.875rem;
 }
+.ticker-wrapper {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  flex-shrink: 0;
+  animation: ticker 40s linear infinite;
+}
+
+.ticker-wrapper:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
