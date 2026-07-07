@@ -39,6 +39,7 @@ function History({ from, to }) {
   const [range, setRange] = useState("1M");
   const ranges = ["1D", "1W", "1M", "3M", "1Y", "5Y"];
   const chartRef = useRef(null);
+  const shouldScrollRef = useRef(false);
 
   function getDateRange(range) {
     const end = new Date();
@@ -88,16 +89,6 @@ function History({ from, to }) {
         });
 
         setHistoryData(data);
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            chartRef.current?.focus({ preventScroll: true });
-
-            chartRef.current?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          });
-        });
       } catch (err) {
         console.error(err);
         setError(err.message);
@@ -108,6 +99,17 @@ function History({ from, to }) {
 
     loadHistory();
   }, [range, from, to]);
+  useEffect(() => {
+    if (!loading && shouldScrollRef.current && chartRef.current) {
+      shouldScrollRef.current = false;
+
+      chartRef.current.focus({ preventScroll: true });
+      chartRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [loading]);
 
   return (
     <section className="flex flex-col gap-2 justify-center items-center mx-auto">
@@ -172,6 +174,7 @@ function History({ from, to }) {
                 <button
                   key={item}
                   onClick={() => {
+                    shouldScrollRef.current = true;
                     setRange(item);
 
                     requestAnimationFrame(() => {
