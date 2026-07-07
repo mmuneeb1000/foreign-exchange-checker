@@ -53,69 +53,72 @@ function Compare({
 
   if (loading) {
     return (
-      <section className="rounded-xl bg-neutral-900 p-6 text-center">
+      <section
+        role="status"
+        aria-live="polite"
+        className="rounded-xl bg-neutral-900 p-6 text-center"
+      >
         <h3 className=" font-medium">Loading comparisons...</h3>
       </section>
     );
   }
 
   return (
-    <section>
-      <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700">
-        <p className="text-base uppercase text-white my-2">
-          <span className="text-neutral-200">Multi Currency: </span>
-          {amount.toLocaleString()} from {from}
-        </p>
-        {rates.map((item) => (
-          <div
-            key={item.code}
-            className="flex  items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3"
-          >
-            <div className="flex items-center gap-5">
-              <img
-                src={getFlag(item.code)}
-                alt={item.name}
-                className="h-6 w-6 rounded-full border border-neutral-700 object-cover"
-              />
+    <section className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700">
+      <p className="text-base uppercase text-white my-2">
+        <span className="text-neutral-200">Multi Currency: </span>
+        {amount.toLocaleString()} from {from}
+      </p>
+      {rates.map((item) => (
+        <div
+          key={item.code}
+          className="flex  items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3"
+        >
+          <div className="flex items-center gap-5">
+            <img
+              src={getFlag(item.code)}
+              alt={`${item.name} flag`}
+              className="h-6 w-6 rounded-full border border-neutral-700 object-cover"
+            />
 
-              <div>
-                <h3 className="font-medium ">{item.code}</h3>
+            <div>
+              <h3 className="font-medium ">{item.code}</h3>
 
-                <p className="text-xs text-neutral-100">{item.name}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <p className="text-sm font-semibold text-white">
-                  {item.converted.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                  {item.code}
-                </p>
-
-                <p className="text-xs text-neutral-200">
-                  @ {item.rate.toFixed(4)}
-                </p>
-              </div>
-              <span
-                className={`rounded-lg px-2 py-2 text-xs ${
-                  isFavorite(item.code)
-                    ? "bg-neutral-700 text-neutral-900 border-2 border-lime-500"
-                    : "bg-neutral-700 text-neutral-300 border-2 border-neutral-700"
-                }`}
-              >
-                <img
-                  src={isFavorite(item.code) ? FavoriteFilled : FavoriteOutline}
-                  alt={isFavorite(item.code) ? "Favorited" : "Not favorited"}
-                  className="h-4 w-4"
-                />
-              </span>
+              <p className="text-xs text-neutral-100">{item.name}</p>
             </div>
           </div>
-        ))}
-      </div>
+
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-sm font-semibold text-white">
+                {item.converted.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+                {item.code}
+              </p>
+
+              <p className="text-xs text-neutral-200">
+                @ {item.rate.toFixed(4)}
+              </p>
+            </div>
+            <span
+              className={`rounded-lg px-2 py-2 text-xs ${
+                isFavorite(item.code)
+                  ? "bg-neutral-700 text-neutral-900 border-2 border-lime-500"
+                  : "bg-neutral-700 text-neutral-300 border-2 border-neutral-700"
+              }`}
+            >
+              <img
+                src={isFavorite(item.code) ? FavoriteFilled : FavoriteOutline}
+                alt=""
+                aria-hidden="true"
+                className="h-4 w-4"
+              />
+            </span>
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

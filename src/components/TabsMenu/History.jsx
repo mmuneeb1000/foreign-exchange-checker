@@ -113,18 +113,22 @@ function History({ from, to }) {
 
   return (
     <section className="flex flex-col gap-2 justify-center items-center mx-auto">
-      {loading && <p>Loading history...</p>}
+      {loading && (
+        <div role="status" aria-live="polite">
+          Loading history...
+        </div>
+      )}
       {!loading && error && (
-        <div>
+        <section role="alert">
           <h2 className="text-base">No chart data available</h2>
           <p className="text-neutral-200 text-center">
             We couldn't load rate history for 'pair' right now. This usually
             clears up in a minute.
           </p>
-        </div>
+        </section>
       )}
       {!loading && !error && (
-        <div className=" w-full ">
+        <div className="w-full">
           <div className=" lg:flex lg:items-center lg:gap-8 lg:h-26">
             <div className="mb-3 grid grid-cols-2 gap-4 lg:flex lg:justify-between lg:flex-nowrap">
               <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3 lg:w-32 lg:h-18">
@@ -160,6 +164,9 @@ function History({ from, to }) {
                   % Change
                 </p>
                 <p
+                  aria-label={`${
+                    percentChange >= 0 ? "Up" : "Down"
+                  } ${Math.abs(percentChange).toFixed(2)} percent`}
                   className={`text-lg font-medium ${
                     percentChange >= 0 ? "text-green-500" : "text-red-500"
                   }`}
@@ -169,10 +176,15 @@ function History({ from, to }) {
                 </p>
               </div>
             </div>
-            <div className="flex gap-2 items-center mb-3 rounded-lg w-57 lg:h-11">
+            <div
+              role="group"
+              aria-label="History range"
+              className="flex gap-2 items-center mb-3 rounded-lg w-57 lg:h-11"
+            >
               {ranges.map((item) => (
                 <button
                   key={item}
+                  aria-pressed={range === item}
                   onClick={() => {
                     shouldScrollRef.current = true;
                     setRange(item);
@@ -204,6 +216,8 @@ function History({ from, to }) {
           <div
             ref={chartRef}
             tabIndex={-1}
+            role="img"
+            aria-label={`Exchange rate history for ${from} to ${to} over ${range}`}
             className="flex flex-col gap-3 bg-neutral-700 h-96 px-2 py-4 rounded-xl "
           >
             <span className="mx-2 text-base">

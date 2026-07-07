@@ -59,6 +59,7 @@ function Log({ conversionLog, setConversionLog }) {
           <h3 className="uppercase">Conversion Log</h3>
           <button
             onClick={clearLog}
+            aria-label="Clear all conversion history"
             className="rounded-lg border uppercase cursor-pointer hover:border-red-500 
             border-neutral-200 px-2 py-1 text-sm text-neutral-200 focus-lime"
           >
@@ -71,7 +72,7 @@ function Log({ conversionLog, setConversionLog }) {
             className="flex rounded-xl justify-between items-center border border-neutral-400 bg-neutral-600 p-3"
           >
             <div className="flex gap-4 focus-lime items-center justify-between">
-              <span className="text-base text-neutral-200">
+              <span aria-hidden="true" className="text-base text-neutral-200">
                 {getRelativeTime(item.date)}
               </span>
               <h3 className=" text-white">
@@ -87,10 +88,11 @@ function Log({ conversionLog, setConversionLog }) {
               </div>
               <button
                 onClick={() => removeLog(item.id)}
+                aria-label={`Delete conversion from ${item.from} to ${item.to}`}
                 className="rounded-lg items-center border border-neutral-300 
                 cursor-pointer hover:border-red-500 px-2 py-2 text-xs focus-lime"
               >
-                <img src={deleteIcon} />
+                <img alt="" aria-hidden="true" src={deleteIcon} />
               </button>
             </div>
           </div>

@@ -31,7 +31,12 @@ function Live({ marketPairs, markets, setMarkets }) {
 
         <span className="text-white">{item.rate.toFixed(4)}</span>
 
-        <span className={item.change >= 0 ? "text-green-500" : "text-red-500"}>
+        <span
+          aria-label={`${
+            item.change >= 0 ? "Up" : "Down"
+          } ${Math.abs(item.percent).toFixed(2)} percent`}
+          className={item.change >= 0 ? "text-green-500" : "text-red-500"}
+        >
           {item.change >= 0 ? "▲" : "▼"} {Math.abs(item.percent).toFixed(2)}%
         </span>
       </div>
@@ -43,10 +48,12 @@ function Live({ marketPairs, markets, setMarkets }) {
         Live Markets
       </div>
 
-      <div className="ticker-wrapper">
+      <div className="ticker-wrapper" aria-label="Live market ticker">
         <div className="ticker-track">{renderItems()}</div>
 
-        <div className="ticker-track">{renderItems()}</div>
+        <div aria-hidden="true" className="ticker-track">
+          {renderItems()}
+        </div>
       </div>
     </section>
   );

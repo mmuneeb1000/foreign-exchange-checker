@@ -98,9 +98,9 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
       <div className="space-y-3 rounded-xl p-4 bg-neutral-700">
         <h3 className="uppercase">Pinned Pairs</h3>
         {rates.map((item) => (
-          <button
+          <div
             key={`${item.from}-${item.to}`}
-            type="button"
+            role="button"
             onClick={() => {
               setFrom(item.from);
               setTo(item.to);
@@ -125,8 +125,10 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
                   {item.rate.toFixed(4)}
                 </p>
 
-                <p>
-                  {item.change >= 0 ? "▲" : "▼"}{" "}
+                <p
+                  aria-label={`${item.percent >= 0 ? "Up" : "Down"} ${Math.abs(item.percent).toFixed(2)} percent`}
+                >
+                  <span aria-hidden="true">{item.change >= 0 ? "▲" : "▼"}</span>{" "}
                   {Math.abs(item.percent).toFixed(2)}%
                 </p>
               </div>
@@ -148,7 +150,7 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
                 />
               </button>
             </div>
-          </button>
+          </div>
         ))}
       </div>
     </section>
