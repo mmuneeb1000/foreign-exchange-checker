@@ -10,8 +10,48 @@ function Dropdown({ currencies = [], value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
 
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
+
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    setHighlightedIndex(0);
+  }, [search, isOpen]);
+  function handleKeyDown(e) {
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setHighlightedIndex((i) =>
+          Math.min(i + 1, visibleCurrencies.length - 1),
+        );
+        break;
+
+      case "ArrowUp":
+        e.preventDefault();
+        setHighlightedIndex((i) => Math.max(i - 1, 0));
+        break;
+
+      case "Enter":
+        e.preventDefault();
+        handleSelect(visibleCurrencies[highlightedIndex]);
+        break;
+
+      case "Escape":
+        setIsOpen(false);
+        break;
+    }
+  }
+  const handleButtonKeyDown = (e) => {
+    switch (e.key) {
+      case "Enter":
+      case " ":
+      case "ArrowDown":
+        e.preventDefault();
+        setIsOpen(true);
+        break;
+    }
+  };
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -25,16 +65,26 @@ function Dropdown({ currencies = [], value, onChange }) {
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  const availableCurrencies = useMemo(() => {
+    return currencies.filter((currency) => getFlag(currency.iso_code));
+  }, [currencies]);
+  const filteredCurrencies = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    if (!query) return [];
+
+    return availableCurrencies.filter(
+      (currency) =>
+        currency.iso_code.toLowerCase().includes(query) ||
+        currency.name.toLowerCase().includes(query),
+    );
+  }, [availableCurrencies, search]);
 
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
     }
   }, [isOpen]);
-
-  const availableCurrencies = useMemo(() => {
-    return currencies.filter((currency) => getFlag(currency.iso_code));
-  }, [currencies]);
 
   const featuredCurrencies = useMemo(() => {
     return FEATURED.map((code) =>
@@ -48,18 +98,6 @@ function Dropdown({ currencies = [], value, onChange }) {
     );
   }, [availableCurrencies]);
 
-  const filteredCurrencies = useMemo(() => {
-    const query = search.trim().toLowerCase();
-
-    if (!query) return [];
-
-    return availableCurrencies.filter(
-      (currency) =>
-        currency.iso_code.toLowerCase().includes(query) ||
-        currency.name.toLowerCase().includes(query),
-    );
-  }, [availableCurrencies, search]);
-
   const selectedCurrency =
     availableCurrencies.find((currency) => currency.iso_code === value) ??
     featuredCurrencies[0] ??
@@ -70,13 +108,29 @@ function Dropdown({ currencies = [], value, onChange }) {
     setIsOpen(false);
     setSearch("");
   };
+  const visibleCurrencies = search
+    ? filteredCurrencies
+    : [...featuredCurrencies, ...otherCurrencies];
+  useEffect(() => {
+    const el = document.getElementById(
+      `currency-${visibleCurrencies[highlightedIndex]?.iso_code}`,
+    );
 
-  const renderCurrency = (currency) => (
+    el?.scrollIntoView({
+      block: "nearest",
+    });
+  }, [highlightedIndex, visibleCurrencies]);
+
+  const renderCurrency = (currency, index) => (
     <li
       key={currency.iso_code}
       onClick={() => handleSelect(currency)}
-      className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-neutral-500 ${
-        currency.iso_code === value ? "bg-neutral-500" : ""
+      id={`currency-${currency.iso_code}`}
+      role="option"
+      aria-selected={currency.iso_code === value}
+      className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors
+      ${
+        highlightedIndex === index ? "bg-neutral-500" : "hover:bg-neutral-500"
       }`}
     >
       <img
@@ -98,7 +152,11 @@ function Dropdown({ currencies = [], value, onChange }) {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
+        aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-controls="currency-listbox"
+        aria-label={`Selected currency ${selectedCurrency?.name}`}
+        onKeyDown={handleButtonKeyDown}
         className="flex w-28 items-center justify-between rounded-lg 
         cursor-pointer border border-neutral-300 bg-neutral-500 px-3 py-2 hover:bg-neutral-400"
       >
@@ -134,15 +192,23 @@ function Dropdown({ currencies = [], value, onChange }) {
               placeholder="Search currency..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full rounded-lg border border-neutral-400 
               bg-neutral-600 pl-10 pr-3 py-2 outline-none placeholder:text-neutral-100 placeholder:text-xs"
             />
           </div>
 
-          <ul className="max-h-80 overflow-y-auto">
+          <ul
+            id="currency-listbox"
+            role="listbox"
+            aria-label="Currencies"
+            className="max-h-80 overflow-y-auto"
+          >
             {search ? (
               filteredCurrencies.length ? (
-                filteredCurrencies.map(renderCurrency)
+                filteredCurrencies.map((currency, index) =>
+                  renderCurrency(currency, index),
+                )
               ) : (
                 <li className="px-4 py-6 text-center text-sm text-neutral-200">
                   No currencies found.
@@ -151,22 +217,26 @@ function Dropdown({ currencies = [], value, onChange }) {
             ) : (
               <>
                 <li
-                  className="px-4 py-2 text-xs font-semibold uppercase 
-                tracking-wider border-b border-neutral-300 text-neutral-200"
+                  role="presentation"
+                  className="border-b border-neutral-300 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-200"
                 >
                   Popular
                 </li>
 
-                {featuredCurrencies.map(renderCurrency)}
+                {featuredCurrencies.map((currency, index) =>
+                  renderCurrency(currency, index),
+                )}
 
                 <li
-                  className="border-b border-neutral-300 px-4 py-2 text-xs 
-                font-semibold uppercase tracking-wider text-neutral-200"
+                  role="presentation"
+                  className="border-y border-neutral-300 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-200"
                 >
                   Others
                 </li>
 
-                {otherCurrencies.map(renderCurrency)}
+                {otherCurrencies.map((currency, index) =>
+                  renderCurrency(currency, featuredCurrencies.length + index),
+                )}
               </>
             )}
           </ul>

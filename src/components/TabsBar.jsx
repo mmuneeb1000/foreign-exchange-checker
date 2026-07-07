@@ -89,7 +89,7 @@ function TabsBar({
       </div>
 
       <div className="hidden lg:flex ">
-        <ul className="flex gap-4">
+        <ul role="tablist" aria-label="Currency tools" className="flex gap-4">
           {tabs.map((tab) => (
             <li
               key={tab.id}
