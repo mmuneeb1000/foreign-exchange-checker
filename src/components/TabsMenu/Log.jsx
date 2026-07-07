@@ -70,8 +70,8 @@ function Log({ conversionLog, setConversionLog }) {
             key={item.id}
             className="flex rounded-xl justify-between items-center border border-neutral-400 bg-neutral-600 p-3"
           >
-            <div className="flex flex-col lg:flex-row lg:gap-4 focus-lime items-center justify-between">
-              <span className="text-base text-neutral-300">
+            <div className="flex gap-4 focus-lime items-center justify-between">
+              <span className="text-base text-neutral-200">
                 {getRelativeTime(item.date)}
               </span>
               <h3 className=" text-white">

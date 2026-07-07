@@ -86,9 +86,12 @@ function Converter({
           <div className="flex justify-center gap-2 my-2">
             <button
               onClick={toggleFavorite}
-              className={`flex w-27 border border-neutral-300 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase focus-lime ${
-                favorite ? "bg-lime-500 text-neutral-900" : " text-neutral-200"
-              }`}
+              className={`flex w-27 border border-neutral-300 cursor-pointer
+                 items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase focus-lime
+                 active:scale-95
+  active:brightness-90 ${
+    favorite ? "bg-lime-500 text-neutral-900" : " text-neutral-200"
+  }`}
             >
               <img
                 src={favorite ? FavoriteFilled : FavoriteOutline}
@@ -103,7 +106,8 @@ function Converter({
               onClick={() => logConversion(converted)}
               className="text-xs px-2 py-1 bg:neutral-800 border cursor-pointer uppercase 
                rounded-lg whitespace-nowrap border-neutral-400 outline-none
-              focus-lime hover:border-lime-500 hover:bg-lime-800"
+              focus-lime hover:border-lime-500 hover:bg-lime-800 active:scale-95
+  active:brightness-90"
             >
               Log Conversion
             </button>
