@@ -39,17 +39,7 @@ function History({ from, to }) {
   const [range, setRange] = useState("1M");
   const ranges = ["1D", "1W", "1M", "3M", "1Y", "5Y"];
   const chartRef = useRef(null);
-  useEffect(() => {
-    if (chartRef.current) {
-      const y =
-        chartRef.current.getBoundingClientRect().top + window.scrollY - 100; // offset for sticky header
 
-      window.scrollTo({
-        top: y,
-        behavior: "smooth",
-      });
-    }
-  }, [range]);
   function getDateRange(range) {
     const end = new Date();
     const start = new Date();
@@ -98,6 +88,16 @@ function History({ from, to }) {
         });
 
         setHistoryData(data);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            chartRef.current?.focus({ preventScroll: true });
+
+            chartRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          });
+        });
       } catch (err) {
         console.error(err);
         setError(err.message);
@@ -173,6 +173,17 @@ function History({ from, to }) {
                   key={item}
                   onClick={() => {
                     setRange(item);
+
+                    requestAnimationFrame(() => {
+                      chartRef.current?.focus({
+                        preventScroll: true,
+                      });
+
+                      chartRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    });
                   }}
                   className={`rounded-md px-3.5 py-3.5  cursor-pointer
                   hover:text-white text-xs tracking-wide transition focus-lime
@@ -189,6 +200,7 @@ function History({ from, to }) {
           </div>
           <div
             ref={chartRef}
+            tabIndex={-1}
             className="flex flex-col gap-3 bg-neutral-700 h-96 px-2 py-4 rounded-xl "
           >
             <span className="mx-2 text-base">
