@@ -25,7 +25,7 @@ function Converter({
 
   return (
     <section className="bg-neutral-900 flex flex-col ">
-      <h2 className="text-base uppercase">Check The Rate</h2>
+      <h1 className="text-base uppercase">Check The Rate</h1>
       <div
         className="flex flex-col px-3 py-4 my-3 bg-neutral-700 
       rounded-xl gap-4"
@@ -86,11 +86,8 @@ function Converter({
           <div className="flex justify-center gap-2 my-2">
             <button
               onClick={toggleFavorite}
-              className={`flex w-27 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercaseoutline-none
-              focus-lime ${
-                favorite
-                  ? "bg-lime-500 text-neutral-900"
-                  : "border border-neutral-300 text-neutral-200"
+              className={`flex w-27 border border-neutral-300 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase focus-lime ${
+                favorite ? "bg-lime-500 text-neutral-900" : " text-neutral-200"
               }`}
             >
               <img

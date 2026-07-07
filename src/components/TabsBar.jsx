@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import menuDown from "../assets/images/icon-menu-down.svg";
 import History from "./TabsMenu/History";
 import Compare from "./TabsMenu/Compare";
 import Favorites from "./TabsMenu/Favorites";
@@ -53,6 +54,7 @@ function TabsBar({
     });
   }
   const [activeTab, setActiveTab] = useState("History");
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const tabs = [
     {
@@ -104,27 +106,79 @@ function TabsBar({
   ];
 
   const activeComponent = tabs.find((tab) => tab.id === activeTab)?.component;
+  const activeTabData = tabs.find((tab) => tab.id === activeTab);
 
   return (
     <section className="py-2">
-      <div className="lg:hidden">
-        <label htmlFor="toggle" className="sr-only">
-          Select a tab
-        </label>
-        <select
-          name="toggle"
-          id="toggle"
-          value={activeTab}
-          onChange={(e) => setActiveTab(e.target.value)}
-          className="flex justify-between w-full rounded-xl border uppercase tracking-[1px] border-neutral-300 bg-neutral-700 px-4 py-2"
+      <div className="relative lg:hidden">
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-tabs"
+          onClick={() => setMobileOpen((prev) => !prev)}
+          className="flex w-full items-center justify-between rounded-xl border border-neutral-300 bg-neutral-700 px-4 py-3 uppercase tracking-[1px] outline-none transition focus-visible:ring-2 focus-visible:ring-lime-500"
         >
-          {tabs.map((tab) => (
-            <option key={tab.id} value={tab.id}>
-              {tab.label}
-              {tab.count !== undefined ? ` (${tab.count})` : ""}
-            </option>
-          ))}
-        </select>
+          <div className="flex items-center gap-2">
+            <span>{activeTabData.label}</span>
+
+            {activeTabData.count !== undefined && (
+              <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-lime-800 px-2 py-0.5 text-xs font-semibold text-lime-300">
+                {activeTabData.count}
+              </span>
+            )}
+          </div>
+
+          <img
+            src={menuDown}
+            alt="Menu Open"
+            aria-hidden="true"
+            className={`h-5 w-5 transition-transform ${
+              mobileOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+
+        {mobileOpen && (
+          <div className="absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-xl border border-neutral-300 bg-neutral-700 shadow-xl">
+            <ul role="listbox" aria-label="Navigation tabs">
+              {tabs.map((tab) => (
+                <li key={tab.id}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={activeTab === tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setMobileOpen(false);
+                    }}
+                    className={`flex w-full items-center justify-between px-4 py-3 uppercase tracking-[1px] transition-colors
+                ${
+                  activeTab === tab.id
+                    ? "bg-neutral-600 text-white"
+                    : "text-white hover:bg-neutral-600"
+                }`}
+                  >
+                    <span>{tab.label}</span>
+
+                    {tab.count !== undefined && (
+                      <span
+                        className={`inline-flex min-w-5 items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold
+                    ${
+                      activeTab === tab.id
+                        ? "bg-neutral-900 text-lime-300"
+                        : "bg-lime-800 text-lime-300"
+                    }`}
+                      >
+                        {tab.count}
+                      </span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="hidden lg:flex ">

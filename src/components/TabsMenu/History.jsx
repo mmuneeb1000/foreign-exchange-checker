@@ -123,7 +123,7 @@ function History({ from, to }) {
       )}
       {!loading && !error && (
         <div className=" w-full ">
-          <div className=" lg:flex lg:items-center lg:justify-between lg:h-26">
+          <div className=" lg:flex lg:items-center lg:gap-8 lg:h-26">
             <div className="mb-3 grid grid-cols-2 gap-4 lg:flex lg:justify-between lg:flex-nowrap">
               <div className="rounded-xl w-full bg-neutral-700 border border-neutral-500 p-3 lg:w-32 lg:h-18">
                 <p className="mb-2 text-xs uppercase tracking-widest text-neutral-200">
@@ -167,19 +167,20 @@ function History({ from, to }) {
                 </p>
               </div>
             </div>
-            <div className="flex items-center mb-3 rounded-lg w-57 bg-neutral-700 lg:h-11">
+            <div className="flex gap-2 items-center mb-3 rounded-lg w-57 lg:h-11">
               {ranges.map((item) => (
                 <button
                   key={item}
                   onClick={() => {
                     setRange(item);
                   }}
-                  className={`rounded-md px-3 cursor-pointer hover:text-white py-3 text-xs transition 
-                  focus-lime ${
-                    range === item
-                      ? "bg-neutral-600 text-white"
-                      : "text-neutral-100 "
-                  }`}
+                  className={`rounded-md px-3.5 py-3.5  cursor-pointer
+                  hover:text-white text-xs tracking-wide transition focus-lime
+                   ${
+                     range === item
+                       ? "bg-neutral-600 text-white"
+                       : "bg-neutral-700 text-neutral-200"
+                   }`}
                 >
                   {item}
                 </button>
@@ -188,7 +189,7 @@ function History({ from, to }) {
           </div>
           <div
             ref={chartRef}
-            className="flex flex-col gap-3 bg-neutral-700 h-96 px-2 py-4 rounded-xl"
+            className="flex flex-col gap-3 bg-neutral-700 h-96 px-2 py-4 rounded-xl "
           >
             <span className="mx-2 text-base">
               {from}/{to}
