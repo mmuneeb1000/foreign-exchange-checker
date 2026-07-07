@@ -38,7 +38,7 @@ function Converter({
         lg:flex-row"
         >
           <div
-            className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5"
+            className="flex flex-col p-3 gap-2 lg:p-4 rounded-xl bg-neutral-600 lg:w-100 lg:gap-5"
             onClick={() => amountInputRef.current?.focus()}
           >
             <label htmlFor="amount" className="text-neutral-200 uppercase">
@@ -83,7 +83,7 @@ function Converter({
               />
             </button>
           </div>
-          <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
+          <div className="flex flex-col p-3 gap-2 lg:p-4 rounded-xl bg-neutral-600 lg:w-100 lg:gap-5">
             <label htmlFor="converted" className="text-neutral-200 uppercase">
               Receive
             </label>
@@ -115,7 +115,7 @@ function Converter({
             </p>
           )}
 
-          <div className="flex justify-center items-center gap-2 my-2">
+          <div className="flex justify-center items-center gap-2 mt-2">
             <button
               onClick={toggleFavorite}
               aria-pressed={favorite}

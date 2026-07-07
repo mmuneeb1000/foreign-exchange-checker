@@ -158,7 +158,7 @@ function App() {
         markets={markets}
         setMarkets={setMarkets}
       />
-      <main className="px-4 py-8 lg:w-230 lg:mx-auto">
+      <main className="p-4 lg:px-4 lg:py-8 lg:w-230 lg:mx-auto">
         <Converter
           currencies={currencies}
           from={from}
