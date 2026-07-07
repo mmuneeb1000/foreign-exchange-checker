@@ -88,7 +88,7 @@ function Converter({
               className={`flex w-27 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase ${
                 favorite
                   ? "bg-lime-500 text-neutral-900"
-                  : "border-2 border-neutral-300 text-neutral-200"
+                  : "border border-neutral-300 text-neutral-200"
               }`}
             >
               <img
@@ -102,7 +102,8 @@ function Converter({
 
             <button
               onClick={() => logConversion(converted)}
-              className="text-xs px-2 py-1 border cursor-pointer uppercase border-lime-500 rounded-lg whitespace-nowrap"
+              className="text-xs px-2 py-1 bg:neutral-800 border cursor-pointer uppercase 
+               rounded-lg whitespace-nowrap border-neutral-400 hover:border-lime-500 hover:bg-lime-800"
             >
               Log Conversion
             </button>
