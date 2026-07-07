@@ -175,13 +175,7 @@ function History({ from, to }) {
                     setRange(item);
                   }}
                   className={`rounded-md px-3 cursor-pointer hover:text-white py-3 text-xs transition 
-                  outline-none
-                  focus:outline-none
-                  focus-visible:outline-none
-                  focus-visible:ring-2
-                  focus-visible:ring-lime-500
-                  focus-visible:ring-offset-2
-                  focus-visible:ring-offset-neutral-900 ${
+                  focus-lime ${
                     range === item
                       ? "bg-neutral-600 text-white"
                       : "text-neutral-100 "

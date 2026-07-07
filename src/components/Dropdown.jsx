@@ -169,13 +169,7 @@ function Dropdown({ currencies = [], value, onChange }) {
         className="flex w-28 items-center justify-between rounded-lg 
         cursor-pointer border border-neutral-300 
         bg-neutral-500 px-3 py-2 hover:bg-neutral-400
-        outline-none
-          focus:outline-none
-          focus-visible:outline-none
-          focus-visible:ring-2
-          focus-visible:ring-lime-500
-          focus-visible:ring-offset-2
-          focus-visible:ring-offset-neutral-900"
+        focus-lime"
       >
         <div className="flex items-center gap-3">
           {selectedCurrency && (
