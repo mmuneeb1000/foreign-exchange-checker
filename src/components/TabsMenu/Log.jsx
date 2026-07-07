@@ -60,7 +60,7 @@ function Log({ conversionLog, setConversionLog }) {
           <button
             onClick={clearLog}
             className="rounded-lg border uppercase cursor-pointer hover:border-red-500 
-            border-neutral-200 px-2 py-1 text-xs text-neutral-200 focus-lime"
+            border-neutral-200 px-2 py-1 text-sm text-neutral-200 focus-lime"
           >
             Clear All
           </button>
