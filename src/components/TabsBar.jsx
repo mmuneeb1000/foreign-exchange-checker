@@ -116,11 +116,12 @@ function TabsBar({
           id="toggle"
           value={activeTab}
           onChange={(e) => setActiveTab(e.target.value)}
-          className="w-full rounded-xl border uppercase border-neutral-300 bg-neutral-700 px-2 py-2"
+          className="flex justify-between w-full rounded-xl border uppercase tracking-[1px] border-neutral-300 bg-neutral-700 px-4 py-2"
         >
           {tabs.map((tab) => (
             <option key={tab.id} value={tab.id}>
               {tab.label}
+              {tab.count !== undefined ? ` (${tab.count})` : ""}
             </option>
           ))}
         </select>
@@ -139,11 +140,11 @@ function TabsBar({
                 tabIndex={activeTab === tab.id ? 0 : -1}
                 onKeyDown={(e) => handleTabKeyDown(e, index)}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex cursor-pointer items-center gap-2 px-3 py-2 uppercase transition-colors
+                className={`flex cursor-pointer items-center tracking-[1px] gap-2 px-3 py-2 uppercase transition-colors
                 ${
                   activeTab === tab.id
                     ? "border-b-3 border-lime-500 text-white"
-                    : "border-b-3 border-neutral-900 text-neutral-200"
+                    : "border-b-3 border-neutral-900 text-white"
                 }
                 focus-visible:outline-none
                 focus-visible:ring
@@ -160,7 +161,8 @@ function TabsBar({
                         ? "favorite pairs"
                         : "logged conversions"
                     }`}
-                    className="flex h-5 min-w-5 items-center justify-center rounded-full bg-lime-800 px-1 text-xs"
+                    className="flex h-5 min-w-5 items-center justify-center
+                     rounded-full text-lime-500 bg-lime-800 px-1 text-xs"
                   >
                     {tab.count}
                   </span>

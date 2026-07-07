@@ -227,11 +227,12 @@ function History({ from, to }) {
                     fontFamily: "Inter",
                     fontWeight: 500,
                   }}
+                  tickMargin={10}
                 />
                 <YAxis
                   domain={[min - padding, max + padding]}
                   tickFormatter={(value) => value.toFixed(4)}
-                  width={60}
+                  width={50}
                   axisLine={false}
                   tickLine={false}
                   tick={{
