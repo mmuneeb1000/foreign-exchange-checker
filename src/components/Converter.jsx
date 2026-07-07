@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import ConversionIcon from "../assets/images/icon-exchange.svg";
 import Dropdown from "./Dropdown";
 import FavoriteFilled from "../assets/images/icon-star-black.svg";
