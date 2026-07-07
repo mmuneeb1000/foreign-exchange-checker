@@ -2,6 +2,7 @@ import ConversionIcon from "../assets/images/icon-exchange.svg";
 import Dropdown from "./Dropdown";
 import FavoriteFilled from "../assets/images/icon-star-black.svg";
 import FavoriteOutline from "../assets/images/icon-star.svg";
+import ConversionIconMobile from "../assets/images/icon-exchange-vertical.svg";
 function Converter({
   currencies,
   from,
@@ -54,9 +55,21 @@ function Converter({
           <div className="mx-auto my-2 lg:mx-4 lg:my-auto">
             <button
               onClick={swapCurrencies}
-              className="flex cursor-pointer p-2 w-10 h-10 rounded-xl hover:bg-neutral-500 bg-neutral-600 focus-lime"
+              className="flex cursor-pointer p-2 w-10 h-10 rounded-xl 
+              hover:bg-neutral-500 bg-neutral-600 focus-lime
+               active:scale-95 active:brightness-90"
             >
-              <img src={ConversionIcon} alt="Swap currencies" />
+              <img
+                src={ConversionIconMobile}
+                alt="Swap currencies"
+                className="block lg:hidden"
+              />
+
+              <img
+                src={ConversionIcon}
+                alt="Swap currencies"
+                className="hidden lg:block"
+              />
             </button>
           </div>
           <div className="flex flex-col p-4 rounded-xl bg-neutral-600 lg:w-100 gap-5">
