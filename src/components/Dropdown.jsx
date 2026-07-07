@@ -4,7 +4,7 @@ import SearchIcon from "../assets/images/icon-search.svg";
 import TickIcon from "../assets/images/icon-check.svg";
 import getFlag from "../utils/getFlag";
 
-const FEATURED = ["USD", "EUR", "GBP", "JPY", "PKR"];
+const FEATURED = ["USD", "EUR", "GBP"];
 
 function Dropdown({ currencies = [], value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -128,7 +128,7 @@ function Dropdown({ currencies = [], value, onChange }) {
       id={`currency-${currency.iso_code}`}
       role="option"
       aria-selected={currency.iso_code === value}
-      className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors
+      className={`flex cursor-pointer rounded-lg mt-2 items-center gap-3 px-4 py-2 transition-colors
       ${
         highlightedIndex === index ? "bg-neutral-500" : "hover:bg-neutral-500"
       }`}
@@ -139,7 +139,7 @@ function Dropdown({ currencies = [], value, onChange }) {
         className="h-6 w-6 rounded-full object-cover"
       />
 
-      <div className="flex flex-col">
+      <div className="flex gap-2 items-center">
         <span className="font-medium">{currency.iso_code}</span>
         <span className="text-xs text-neutral-100">{currency.name}</span>
       </div>
@@ -176,13 +176,13 @@ function Dropdown({ currencies = [], value, onChange }) {
 
       {isOpen && (
         <div
-          className="absolute right-[-0.75rem] top-14 z-50 mt-2 w-72 
+          className="absolute right-[-0.75rem] top-14 z-50 mt-2 p-2 w-72 
         overflow-hidden rounded-xl border border-neutral-300 
         bg-neutral-600 shadow-xl"
         >
-          <div className="p-3 relative">
+          <div className="p-1 relative">
             <img
-              className="absolute left-6 top-5.5"
+              className="absolute left-4 top-3.5"
               src={SearchIcon}
               alt="Search Icon"
             />
@@ -194,7 +194,7 @@ function Dropdown({ currencies = [], value, onChange }) {
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
               className="w-full rounded-lg border border-neutral-400 
-              bg-neutral-600 pl-10 pr-3 py-2 outline-none placeholder:text-neutral-100 placeholder:text-xs"
+              bg-neutral-600 pl-10 pr-2 py-2 outline-none placeholder:text-neutral-100 placeholder:text-xs"
             />
           </div>
 
@@ -218,7 +218,8 @@ function Dropdown({ currencies = [], value, onChange }) {
               <>
                 <li
                   role="presentation"
-                  className="border-b border-neutral-300 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-200"
+                  className="border-b border-neutral-300 px-4 py-2 text-xs 
+                  font-semibold uppercase tracking-wider text-neutral-200"
                 >
                   Popular
                 </li>

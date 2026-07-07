@@ -105,7 +105,9 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
               setFrom(item.from);
               setTo(item.to);
             }}
-            className="flex w-full items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3 text-left transition hover:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500"
+            className="flex w-full items-center justify-between rounded-xl border 
+            border-neutral-400 bg-neutral-600 p-3 text-left transition 
+            hover:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500"
           >
             <div>
               <h3 className="font-medium">
