@@ -232,7 +232,7 @@ function History({ from, to }) {
                 />
                 <YAxis
                   domain={[min - padding, max + padding]}
-                  tickFormatter={(value) => value.toFixed(4)}
+                  tickFormatter={(value) => value.toFixed(2)}
                   width={50}
                   axisLine={false}
                   tickLine={false}
@@ -241,6 +241,7 @@ function History({ from, to }) {
                     fontSize: 11,
                     fontWeight: 600,
                   }}
+                  tickMargin={5}
                 />
 
                 <Tooltip
