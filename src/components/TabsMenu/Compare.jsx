@@ -69,7 +69,7 @@ function Compare({
         {rates.map((item) => (
           <div
             key={item.code}
-            className="flex  items-center justify-between rounded-xl border border-neutral-700 bg-neutral-600 p-3"
+            className="flex  items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3"
           >
             <div className="flex items-center gap-5">
               <img

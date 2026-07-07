@@ -68,7 +68,7 @@ function Log({ conversionLog, setConversionLog }) {
         {conversionLog.map((item) => (
           <div
             key={item.id}
-            className="flex rounded-xl justify-between items-center border border-neutral-700 bg-neutral-600 p-4"
+            className="flex rounded-xl justify-between items-center border border-neutral-400 bg-neutral-600 p-3"
           >
             <div className="flex flex-col lg:flex-row lg:gap-4  items-center justify-between">
               <span className="text-base text-neutral-300">

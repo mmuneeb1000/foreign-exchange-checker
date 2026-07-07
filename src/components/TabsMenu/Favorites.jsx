@@ -100,7 +100,8 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
         {rates.map((item) => (
           <div
             key={`${item.from}-${item.to}`}
-            className="flex items-center justify-between rounded-xl border border-neutral-700 bg-neutral-600 p-3"
+            className="flex items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3
+            focus:border-lime-500"
           >
             <div className="flex items-center gap-3">
               <div>
