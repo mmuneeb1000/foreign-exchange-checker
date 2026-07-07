@@ -164,8 +164,8 @@ Implemented:
 
 #### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://currency-converter-app-frankfurter.netlify.app/)
+- [Solution](https://www.frontendmentor.io/solutions/currency-converter-for-hackathon-using-react-and-tailwind-css-DE1eI0-eeE)
+- [Live Site URL](https://currency-converter-app-frankfurter.netlify.app/)
 
 ## My process
 

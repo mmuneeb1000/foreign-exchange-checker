@@ -154,11 +154,8 @@ function Dropdown({ currencies = [], value, onChange }) {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-controls="currency-listbox"
         aria-activedescendant={
           visibleCurrencies[highlightedIndex]
             ? `currency-${visibleCurrencies[highlightedIndex].iso_code}`

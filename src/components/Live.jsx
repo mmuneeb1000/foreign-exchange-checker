@@ -48,7 +48,7 @@ function Live({ marketPairs, markets, setMarkets }) {
         Live Markets
       </div>
 
-      <div className="ticker-wrapper" aria-label="Live market ticker">
+      <div className="ticker-wrapper">
         <div className="ticker-track">{renderItems()}</div>
 
         <div aria-hidden="true" className="ticker-track">
