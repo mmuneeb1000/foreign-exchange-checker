@@ -165,7 +165,7 @@ Implemented:
 #### Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Add live site URL here](https://currency-converter-app-frankfurter.netlify.app/)
 
 ## My process
 
@@ -252,7 +252,7 @@ The most valuable aspect of using AI was rapid iteration. Instead of searching t
 
 - Frontend Mentor - https://www.frontendmentor.io/profile/mmuneeb1000
 - GitHub - https://github.com/mmuneeb1000
-- LinkedIn - https://www.linkedin.com/in/muneeb-hashmi990
+- LinkedIn - https://www.linkedin.com/in/m-muneeb-a9984633b/
 
 ## Acknowledgments
 
