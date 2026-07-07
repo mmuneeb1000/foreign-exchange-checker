@@ -34,7 +34,10 @@ function Dropdown({ currencies = [], value, onChange }) {
 
       case "Enter":
         e.preventDefault();
-        handleSelect(visibleCurrencies[highlightedIndex]);
+        if (visibleCurrencies[highlightedIndex]) {
+          handleSelect(visibleCurrencies[highlightedIndex]);
+        }
+
         break;
 
       case "Escape":
@@ -127,6 +130,7 @@ function Dropdown({ currencies = [], value, onChange }) {
       onClick={() => handleSelect(currency)}
       id={`currency-${currency.iso_code}`}
       role="option"
+      onMouseEnter={() => setHighlightedIndex(index)}
       aria-selected={currency.iso_code === value}
       className={`flex cursor-pointer rounded-lg mt-2 items-center gap-3 px-4 py-2 transition-colors
       ${
@@ -155,10 +159,23 @@ function Dropdown({ currencies = [], value, onChange }) {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="currency-listbox"
+        aria-activedescendant={
+          visibleCurrencies[highlightedIndex]
+            ? `currency-${visibleCurrencies[highlightedIndex].iso_code}`
+            : undefined
+        }
         aria-label={`Selected currency ${selectedCurrency?.name}`}
         onKeyDown={handleButtonKeyDown}
         className="flex w-28 items-center justify-between rounded-lg 
-        cursor-pointer border border-neutral-300 bg-neutral-500 px-3 py-2 hover:bg-neutral-400"
+        cursor-pointer border border-neutral-300 
+        bg-neutral-500 px-3 py-2 hover:bg-neutral-400
+        outline-none
+          focus:outline-none
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-lime-500
+          focus-visible:ring-offset-2
+          focus-visible:ring-offset-neutral-900"
       >
         <div className="flex items-center gap-3">
           {selectedCurrency && (

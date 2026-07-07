@@ -42,7 +42,14 @@ function Converter({
                 value={amount}
                 min="1"
                 onChange={(e) => setAmount(e.target.value)}
-                className="no-spinner bg-transparent text-2xl w-full outline-none"
+                className="no-spinner bg-transparent text-2xl w-full mr-4 outline-none
+                outline-none
+                focus:outline-none
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-lime-500
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-neutral-900"
               />
               <Dropdown
                 currencies={currencies}
@@ -54,7 +61,9 @@ function Converter({
           <div className="mx-auto my-2 lg:mx-4 lg:my-auto">
             <button
               onClick={swapCurrencies}
-              className="cursor-pointer p-2 w-10 h-10 rounded-xl hover:bg-neutral-500 bg-neutral-600"
+              className="flex cursor-pointer p-2 w-10 h-10 rounded-xl hover:bg-neutral-500 bg-neutral-600
+              outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-lime-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
             >
               <img src={ConversionIcon} alt="Swap currencies" />
             </button>
@@ -65,7 +74,13 @@ function Converter({
               <input
                 readOnly
                 value={loading ? "..." : converted}
-                className="bg-transparent text-lime-500 text-2xl outline-none w-full"
+                className="bg-transparent text-lime-500 text-2xl mr-4 
+                w-full outline-none focus:outline-none
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-lime-500
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-neutral-900"
               />
 
               <Dropdown currencies={currencies} value={to} onChange={setTo} />
@@ -85,7 +100,13 @@ function Converter({
           <div className="flex justify-center gap-2 my-2">
             <button
               onClick={toggleFavorite}
-              className={`flex w-27 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase ${
+              className={`flex w-27 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercaseoutline-none
+              focus:outline-none
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-lime-500
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-neutral-900 ${
                 favorite
                   ? "bg-lime-500 text-neutral-900"
                   : "border border-neutral-300 text-neutral-200"
@@ -103,7 +124,10 @@ function Converter({
             <button
               onClick={() => logConversion(converted)}
               className="text-xs px-2 py-1 bg:neutral-800 border cursor-pointer uppercase 
-               rounded-lg whitespace-nowrap border-neutral-400 hover:border-lime-500 hover:bg-lime-800"
+               rounded-lg whitespace-nowrap border-neutral-400 outline-none
+              focus:outline-none focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-lime-500 focus-visible:ring-offset-2
+              focus-visible:ring-offset-neutral-900 hover:border-lime-500 hover:bg-lime-800"
             >
               Log Conversion
             </button>

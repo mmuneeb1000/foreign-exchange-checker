@@ -174,7 +174,14 @@ function History({ from, to }) {
                   onClick={() => {
                     setRange(item);
                   }}
-                  className={`rounded-md px-3 cursor-pointer hover:text-white py-3 text-xs transition ${
+                  className={`rounded-md px-3 cursor-pointer hover:text-white py-3 text-xs transition 
+                  outline-none
+                  focus:outline-none
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-lime-500
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-neutral-900 ${
                     range === item
                       ? "bg-neutral-600 text-white"
                       : "text-neutral-100 "

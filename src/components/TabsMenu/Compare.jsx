@@ -109,7 +109,7 @@ function Compare({
                 <img
                   src={isFavorite(item.code) ? FavoriteFilled : FavoriteOutline}
                   alt={isFavorite(item.code) ? "Favorited" : "Not favorited"}
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                 />
               </span>
             </div>
