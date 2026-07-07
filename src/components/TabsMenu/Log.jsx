@@ -60,7 +60,7 @@ function Log({ conversionLog, setConversionLog }) {
           <button
             onClick={clearLog}
             className="rounded-lg border uppercase cursor-pointer hover:border-red-500 
-            border-neutral-200 px-2 py-1 text-xs text-neutral-200"
+            border-neutral-200 px-2 py-1 text-xs text-neutral-200 focus-lime"
           >
             Clear All
           </button>
@@ -70,7 +70,7 @@ function Log({ conversionLog, setConversionLog }) {
             key={item.id}
             className="flex rounded-xl justify-between items-center border border-neutral-400 bg-neutral-600 p-3"
           >
-            <div className="flex flex-col lg:flex-row lg:gap-4  items-center justify-between">
+            <div className="flex flex-col lg:flex-row lg:gap-4 focus-lime items-center justify-between">
               <span className="text-base text-neutral-300">
                 {getRelativeTime(item.date)}
               </span>
@@ -88,7 +88,7 @@ function Log({ conversionLog, setConversionLog }) {
               <button
                 onClick={() => removeLog(item.id)}
                 className="rounded-lg items-center border border-neutral-300 
-                cursor-pointer hover:border-red-500 px-2 py-2 text-xs"
+                cursor-pointer hover:border-red-500 px-2 py-2 text-xs focus-lime"
               >
                 <img src={deleteIcon} />
               </button>
