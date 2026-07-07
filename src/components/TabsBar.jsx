@@ -162,7 +162,7 @@ function TabsBar({
                         : "logged conversions"
                     }`}
                     className="flex h-5 min-w-5 items-center justify-center
-                     rounded-full text-lime-500 bg-lime-800 px-1 text-xs"
+                     rounded-full text-lime-500 bg-lime-800 p-1 text-xs"
                   >
                     {tab.count}
                   </span>

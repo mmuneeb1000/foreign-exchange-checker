@@ -31,7 +31,7 @@ function Live({ marketPairs, markets, setMarkets }) {
 
         <span className="text-white">{item.rate.toFixed(4)}</span>
 
-        <span className={item.change >= 0 ? "text-lime-400" : "text-red-400"}>
+        <span className={item.change >= 0 ? "text-green-500" : "text-red-500"}>
           {item.change >= 0 ? "▲" : "▼"} {Math.abs(item.percent).toFixed(2)}%
         </span>
       </div>

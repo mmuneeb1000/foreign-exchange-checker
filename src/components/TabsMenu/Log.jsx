@@ -55,7 +55,7 @@ function Log({ conversionLog, setConversionLog }) {
   return (
     <>
       <div className="space-y-3 rounded-xl bg-neutral-700 p-4">
-        <div className="mb-4 flex justify-between">
+        <div className="mb-4 flex items-center justify-between">
           <h3 className="uppercase">Conversion Log</h3>
           <button
             onClick={clearLog}
@@ -70,20 +70,20 @@ function Log({ conversionLog, setConversionLog }) {
             key={item.id}
             className="flex rounded-xl justify-between items-center border border-neutral-700 bg-neutral-600 p-4"
           >
-            <div className="flex flex-col lg:flex-row lg:gap-4  justify-between">
+            <div className="flex flex-col lg:flex-row lg:gap-4  items-center justify-between">
               <span className="text-base text-neutral-300">
                 {getRelativeTime(item.date)}
               </span>
-              <h4 className=" text-white">
+              <h3 className=" text-white">
                 {item.from} → {item.to}
-              </h4>
+              </h3>
             </div>
             <div className="flex gap-4">
               <div className="flex flex-col items-center lg:flex-row lg:gap-4 justify-between text-right">
-                <span className="text-base font-medium">{item.amount}</span>
-                <span className="text-base text-lime-500">
-                  {item.converted}
+                <span className="text-lg text-neutral-200 font-medium">
+                  {item.amount}
                 </span>
+                <span className="text-lg text-lime-500">{item.converted}</span>
               </div>
               <button
                 onClick={() => removeLog(item.id)}

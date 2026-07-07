@@ -79,7 +79,7 @@ function Compare({
               />
 
               <div>
-                <h4 className="font-medium ">{item.code}</h4>
+                <h3 className="font-medium ">{item.code}</h3>
 
                 <p className="text-xs text-neutral-100">{item.name}</p>
               </div>

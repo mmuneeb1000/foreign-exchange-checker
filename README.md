@@ -5,7 +5,7 @@ This is a solution to the [FX Checker challenge on Frontend Mentor](https://www.
 ## Table of contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
+  - [App Breakdown](#app-breakdown)
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
@@ -37,7 +37,7 @@ Log.jsx
 
 Implemented a mobile-first responsive layout with desktop enhancements.
 
-### API Integration
+#### API Integration
 
 Integrated the Frankfurter API.
 
@@ -50,7 +50,9 @@ Implemented:
 - Market ticker endpoint
 - Error handling
 - Loading states
-  Debounced conversion requests
+- Debounced conversion requests
+
+### App Breakdown
 
 #### Converter
 
@@ -82,7 +84,7 @@ Implemented:
 
 - View historical exchange rate performance for the selected currency pair
 - Switch between predefined time ranges (1D, 1W, 1M, 3M, 1Y, and 5Y)
-- Explore an interactive area chart built with Recharts
+- Explore an interactive area chart built with [Recharts](https://recharts.github.io/)
 - View opening rate, latest rate, absolute change, and percentage change
 - Automatically refresh the chart whenever the selected currencies or time range change
 - Smoothly scroll to the chart when switching between historical ranges
@@ -176,6 +178,7 @@ Implemented:
 - Mobile-first workflow
 - React
 - Tailwind CSS
+- Recharts for History
 
 ### What I learned
 
@@ -247,7 +250,6 @@ The most valuable aspect of using AI was rapid iteration. Instead of searching t
 
 ## Author
 
--
 - Frontend Mentor - https://www.frontendmentor.io/profile/mmuneeb1000
 - GitHub - https://github.com/mmuneeb1000
 - LinkedIn - https://www.linkedin.com/in/muneeb-hashmi990

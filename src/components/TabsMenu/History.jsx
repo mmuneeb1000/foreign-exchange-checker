@@ -145,7 +145,7 @@ function History({ from, to }) {
                 </p>
                 <p
                   className={`text-lg font-medium ${
-                    change >= 0 ? "text-lime-500" : "text-red-400"
+                    change >= 0 ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   {change >= 0 ? "+" : ""}
@@ -159,7 +159,7 @@ function History({ from, to }) {
                 </p>
                 <p
                   className={`text-lg font-medium ${
-                    percentChange >= 0 ? "text-lime-500" : "text-red-400"
+                    percentChange >= 0 ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   {percentChange >= 0 ? "▲ +" : "▼ "}
@@ -187,9 +187,9 @@ function History({ from, to }) {
           </div>
           <div
             ref={chartRef}
-            className="flex flex-col gap-2 bg-neutral-700 h-96 px-2 py-4 rounded-xl"
+            className="flex flex-col gap-3 bg-neutral-700 h-96 px-2 py-4 rounded-xl"
           >
-            <span className="text-base">
+            <span className="mx-2 text-base">
               {from}/{to}
             </span>
 

@@ -104,9 +104,9 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
           >
             <div className="flex items-center gap-3">
               <div>
-                <h4 className="font-medium">
+                <h3 className="font-medium">
                   {item.from} → {item.to}
-                </h4>
+                </h3>
               </div>
             </div>
 
