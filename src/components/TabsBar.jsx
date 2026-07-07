@@ -17,6 +17,41 @@ function TabsBar({
   converted,
   amount,
 }) {
+  function handleTabKeyDown(e, index) {
+    const last = tabs.length - 1;
+    let nextIndex = index;
+
+    switch (e.key) {
+      case "ArrowRight":
+        e.preventDefault();
+        nextIndex = index === last ? 0 : index + 1;
+        break;
+
+      case "ArrowLeft":
+        e.preventDefault();
+        nextIndex = index === 0 ? last : index - 1;
+        break;
+
+      case "Home":
+        e.preventDefault();
+        nextIndex = 0;
+        break;
+
+      case "End":
+        e.preventDefault();
+        nextIndex = last;
+        break;
+
+      default:
+        return;
+    }
+
+    setActiveTab(tabs[nextIndex].id);
+
+    requestAnimationFrame(() => {
+      document.getElementById(`tab-${tabs[nextIndex].id}`)?.focus();
+    });
+  }
   const [activeTab, setActiveTab] = useState("History");
 
   const tabs = [
@@ -73,6 +108,9 @@ function TabsBar({
   return (
     <section className="py-2">
       <div className="lg:hidden">
+        <label htmlFor="toggle" className="sr-only">
+          Select a tab
+        </label>
         <select
           name="toggle"
           id="toggle"
@@ -90,30 +128,57 @@ function TabsBar({
 
       <div className="hidden lg:flex ">
         <ul role="tablist" aria-label="Currency tools" className="flex gap-4">
-          {tabs.map((tab) => (
-            <li
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex cursor-pointer items-center uppercase gap-2 px-3 py-2 
-                 ${
-                   activeTab === tab.id
-                     ? "border-b-3 border-lime-500 text-white"
-                     : "border-b-3 border-neutral-900 text-neutral-200"
-                 }`}
-            >
-              {tab.label}
+          {tabs.map((tab, index) => (
+            <li key={tab.id}>
+              <button
+                type="button"
+                role="tab"
+                id={`tab-${tab.id}`}
+                aria-selected={activeTab === tab.id}
+                aria-controls={`tabpanel-${tab.id}`}
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                onKeyDown={(e) => handleTabKeyDown(e, index)}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex cursor-pointer items-center gap-2 px-3 py-2 uppercase transition-colors
+                ${
+                  activeTab === tab.id
+                    ? "border-b-3 border-lime-500 text-white"
+                    : "border-b-3 border-neutral-900 text-neutral-200"
+                }
+                focus-visible:outline-none
+                focus-visible:ring
+                focus-visible:ring-lime-500
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-neutral-900`}
+              >
+                {tab.label}
 
-              {tab.count !== undefined && (
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-lime-800 px-1 text-xs">
-                  {tab.count}
-                </span>
-              )}
+                {tab.count !== undefined && (
+                  <span
+                    aria-label={`${tab.count} ${
+                      tab.id === "Favorites"
+                        ? "favorite pairs"
+                        : "logged conversions"
+                    }`}
+                    className="flex h-5 min-w-5 items-center justify-center rounded-full bg-lime-800 px-1 text-xs"
+                  >
+                    {tab.count}
+                  </span>
+                )}
+              </button>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="mt-6">{activeComponent}</div>
+      <div
+        id={`tabpanel-${activeTab}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeTab}`}
+        className="mt-6"
+      >
+        {activeComponent}
+      </div>
     </section>
   );
 }
