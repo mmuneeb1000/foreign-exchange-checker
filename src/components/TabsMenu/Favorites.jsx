@@ -98,28 +98,31 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
       <div className="space-y-3 rounded-xl p-4 bg-neutral-700">
         <h3 className="uppercase">Pinned Pairs</h3>
         {rates.map((item) => (
-          <div
+          <button
             key={`${item.from}-${item.to}`}
-            className="flex items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3
-            focus:border-lime-500"
+            type="button"
+            onClick={() => {
+              setFrom(item.from);
+              setTo(item.to);
+            }}
+            className="flex w-full items-center justify-between rounded-xl border border-neutral-400 bg-neutral-600 p-3 text-left transition hover:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500"
           >
-            <div className="flex items-center gap-3">
-              <div>
-                <h3 className="font-medium">
-                  {item.from} → {item.to}
-                </h3>
-              </div>
+            <div>
+              <h3 className="font-medium">
+                {item.from} → {item.to}
+              </h3>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex items-center gap-4">
               <div
-                className={`text-xs ${
+                className={`text-right text-xs ${
                   item.change >= 0 ? "text-lime-400" : "text-red-400"
                 }`}
               >
                 <p className="text-base text-neutral-100">
                   {item.rate.toFixed(4)}
                 </p>
+
                 <p>
                   {item.change >= 0 ? "▲" : "▼"}{" "}
                   {Math.abs(item.percent).toFixed(2)}%
@@ -127,14 +130,23 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
               </div>
 
               <button
-                onClick={() => removeFavorite(item.from, item.to)}
-                className="rounded-lg cursor-pointer border-2 border-lime-500 
-                px-2 py-2 hover:border-red-500"
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeFavorite(item.from, item.to);
+                }}
+                aria-label={`Remove ${item.from} to ${item.to} from favorites`}
+                className="cursor-pointer rounded-lg border-2 border-lime-500 p-2 transition hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <img src={FavoriteFilled} alt="Favorite" className="h-4 w-4" />
+                <img
+                  src={FavoriteFilled}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-4 w-4"
+                />
               </button>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </section>

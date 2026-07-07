@@ -68,7 +68,7 @@ Implemented:
 #### Currency picker
 
 - Dropdown of the full list of available currencies by code or name
-- Currencies grouped into "Popular" and "Other currencies", each row showing the flag, code, and name
+- Currencies grouped into "Popular" and "Others", each row showing the flag, code, and name
 - Conversion against the currency that's currently selected
 
 #### Live Market Ticker
