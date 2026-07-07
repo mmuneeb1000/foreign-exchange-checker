@@ -94,11 +94,12 @@ function TabsBar({
             <li
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex cursor-pointer items-center uppercase gap-2 px-3 py-2 ${
-                activeTab === tab.id
-                  ? "border-b-3 border-lime-500 text-white"
-                  : "border-b-3 border-neutral-900 text-neutral-100"
-              }`}
+              className={`flex cursor-pointer items-center uppercase gap-2 px-3 py-2 
+                 ${
+                   activeTab === tab.id
+                     ? "border-b-3 border-lime-500 text-white"
+                     : "border-b-3 border-neutral-900 text-neutral-200"
+                 }`}
             >
               {tab.label}
 

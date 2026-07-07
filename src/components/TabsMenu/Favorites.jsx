@@ -127,7 +127,8 @@ function Favorites({ setFrom, setTo, favorites, setFavorites, amount }) {
 
               <button
                 onClick={() => removeFavorite(item.from, item.to)}
-                className="rounded-lg border-2 border-lime-500 px-2 py-2 text-sm text-red-400"
+                className="rounded-lg cursor-pointer border-2 border-lime-500 
+                px-2 py-2 hover:border-red-500"
               >
                 <img src={FavoriteFilled} alt="Favorite" className="h-4 w-4" />
               </button>

@@ -17,50 +17,120 @@ This is a solution to the [FX Checker challenge on Frontend Mentor](https://www.
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
-### The challenge
+## Overview
 
-Your users should be able to:
+Completed the initial React + Vite application setup with Tailwind CSS and established a modular component architecture.
+
+Core structure:
+
+App.jsx
+Converter.jsx
+TabsBar.jsx
+Dropdown.jsx
+Header.jsx
+Footer.jsx
+Live.jsx
+History.jsx
+Compare.jsx
+Favorites.jsx
+Log.jsx
+
+Implemented a mobile-first responsive layout with desktop enhancements.
+
+### API Integration
+
+Integrated the Frankfurter API.
+
+Implemented:
+
+- Currency list retrieval
+- Live exchange rates
+- Currency conversion
+- Historical exchange rate endpoint
+- Market ticker endpoint
+- Error handling
+- Loading states
+  Debounced conversion requests
 
 #### Converter
 
-- Enter an amount to send and see it convert in real time as they type
-- Pick the "send" and "receive" currencies from a searchable currency picker
-- See the live exchange rate for the active pair (for example, `1 USD = 0.8530 EUR`)
-- Swap the send and receive currencies with the swap button
-- Favorite the active pair, and log a conversion to their history
+- Enter an amount to send and see the converted value update in real time as you type
+- Choose the "Send" and "Receive" currencies from a searchable dropdown with country flags
+- View the live exchange rate for the selected pair (for example, 1 USD = 0.8530 EUR)
+- Instantly swap the selected currencies with a single click
+- Save the active currency pair to Favorites for quick access later
+- Log any conversion to a persistent conversion history stored locally
+- Display loading and error states while exchange rates are being retrieved
+- Debounce API requests to provide a smoother user experience and reduce unnecessary network calls
 
 #### Currency picker
 
-- Search the full list of available currencies by code or name
-- See currencies grouped into "Popular" and "Other currencies", each row showing the flag, code, and name
-- See a check against the currency that's currently selected
+- Dropdown of the full list of available currencies by code or name
+- Currencies grouped into "Popular" and "Other currencies", each row showing the flag, code, and name
+- Conversion against the currency that's currently selected
 
-#### Live markets ticker
+#### Live Market Ticker
 
-- See a ticker of currency pairs, each with its current rate and 24-hour change (up or down)
+- Display continuously scrolling exchange rates using a custom CSS ticker
+- Show twelve major currency pairs simultaneously
+- Display live exchange rates for every pair
+- Indicate daily market movement using percentage changes
+- Highlight positive and negative movements with directional indicators
+- Gracefully handle unsupported currency pairs without interrupting the remaining ticker items
 
-#### Rate history
+#### History
 
-- View a line and area chart of the active pair's rate over time
-- Switch the chart range between 1D, 1W, 1M, 3M, 1Y, and 5Y
-- See the open, last, absolute change, and percentage change for the selected range
+- View historical exchange rate performance for the selected currency pair
+- Switch between predefined time ranges (1D, 1W, 1M, 3M, 1Y, and 5Y)
+- Explore an interactive area chart built with Recharts
+- View opening rate, latest rate, absolute change, and percentage change
+- Automatically refresh the chart whenever the selected currencies or time range change
+- Smoothly scroll to the chart when switching between historical ranges
+- Dynamically scale the chart axes based on available data
 
 #### Compare
 
-- See their send amount converted into a range of other currencies at once, each with its reference rate
-- Pin or unpin any comparison row to their favorites
+- Compare the selected base currency against eight major world currencies
+- Display both the currency code and full currency name
+- Show country flags for each comparison currency
+- Calculate converted amounts using the current input value in real time
+- Display the latest exchange rate for every comparison pair
+- Highlight currency pairs that have already been added to Favorites
+- Indicate the currently selected destination currency
+- Quickly switch the active conversion by selecting any comparison row
+- Lazily load exchange rates to improve perceived performance
 
 #### Favorites
 
-- See their pinned pairs, each with its live rate and 24-hour change
-- Load a pinned pair back into the converter by selecting its row
-- Unpin a pair they no longer want to track
+- Save frequently used currency pairs for quick access
+- Persist favorite pairs using Local Storage
+- Display country flags for every saved currency pair
+- Load a saved pair directly into the converter with a single click
+- Remove favorite pairs instantly without refreshing the application
+- Show live conversion values for every saved pair
+- Display the latest exchange rate for each favorite
+- Indicate daily market movement with gain or loss percentages
+- Synchronize changes immediately across the entire application
 
-#### Conversion log
+#### Conversion Log
 
-- See a log of conversions they've made, each showing the relative time, the pair, and the send and receive amounts
-- Clear the whole log
-- Delete an individual entry
+- Record conversions including source currency, destination currency, amount, converted value, and timestamp
+- Persist conversion history using Local Storage
+- Display the most recent conversions first
+- Show relative timestamps (for example, 20M, 3H, 2D, 1Y)
+- Remove individual conversion entries
+- Clear the entire conversion history with a single action
+- Automatically synchronize changes across all components
+
+#### General Application
+
+- Fully responsive interface optimized for both desktop and mobile devices
+- Centralized state management using React hooks
+- Persistent application data using Local Storage
+- Modular component architecture for maintainability
+- Graceful handling of loading, network, and API errors
+- Real-time updates across all application sections without requiring page refreshes
+- Optimized API usage through debounced requests and lazy-loaded data where appropri
 
 #### UI & accessibility
 
@@ -70,17 +140,27 @@ Your users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+#### Home
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
+![Home](./screenshots/currency-converter-ss.jpg)
 
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
+#### History
 
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
+![History](./screenshots/currency-converter-ss1.jpg)
 
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+#### Favourites
 
-### Links
+![Favourites](./screenshots/currency-converter-ss2.jpg)
+
+#### Conversion Log
+
+![Log](./screenshots/currency-converter-ss3.jpg)
+
+#### Compare
+
+![Compare](./screenshots/currency-converter-ss4.jpg)
+
+#### Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
 - Live Site URL: [Add live site URL here](https://your-live-site-url.com)
@@ -94,71 +174,84 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- React
+- Tailwind CSS
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+This project evolved well beyond a simple currency converter and became an opportunity to build a larger React application with shared state, persistent storage, data visualization, and reusable components.
 
-To see how you can add code snippets, see below:
+Some of the key concepts I strengthened throughout the project include:
 
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
+- Managing shared application state by lifting data into `App.jsx` and passing it down through props instead of relying on individual component state.
+- Persisting user data such as favorites and conversion history with Local Storage while keeping React state as the single source of truth.
+- Working with multiple REST API endpoints to retrieve live exchange rates, historical data, and market information.
+- Building interactive data visualizations using Recharts and dynamically scaling charts based on incoming data.
+- Optimizing API usage with debouncing, lazy loading, and asynchronous requests using `Promise.all()`.
+- Creating reusable components that remain responsive across both desktop and mobile layouts.
+- Handling unsupported API responses gracefully without interrupting the rest of the application.
+- Designing a modular React architecture that makes new features easy to integrate.
 
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
+One implementation I'm particularly happy with is centralizing favorites and conversion history in React state while synchronizing them automatically with Local Storage.
 
 ```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
-};
+const [favorites, setFavorites] = useState([]);
+const [conversionLog, setConversionLog] = useState([]);
+
+useEffect(() => {
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+}, [favorites]);
+
+useEffect(() => {
+  localStorage.setItem("conversionLog", JSON.stringify(conversionLog));
+}, [conversionLog]);
 ```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+This approach eliminated synchronization issues between components and ensured every part of the application updated immediately.
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+Going forward, I'd like to continue improving both performance and user experience by focusing on:
 
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+- Implementing request caching to reduce unnecessary API calls.
+- Expanding the comparison dashboard to support user-selected currencies instead of fixed presets.
+- Adding sorting and filtering to Favorites and Conversion Log.
+- Exploring React Context or Zustand for larger-scale state management.
+- Adding automated testing with Vitest and React Testing Library.
+- Improving accessibility with better keyboard navigation and screen reader support.
+- Exploring animations and micro-interactions to create a more polished user experience.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- https://frankfurter.dev/ - The exchange rate API used throughout the project for live conversions and historical data.
+- https://recharts.org/ - Excellent documentation for building responsive charts and customizing chart components.
+- https://react.dev/ - The official React documentation was invaluable for hooks, effects, and state management best practices.
+- https://tailwindcss.com/docs - Used extensively while building the responsive interface and reusable utility classes.
 
 ### AI Collaboration
 
-Describe how you used AI tools (if any) during this project. This helps demonstrate your ability to work effectively with AI assistants.
+ChatGPT was used as a development assistant throughout the project rather than a code generator.
 
-- What tools did you use (e.g., ChatGPT, Claude, GitHub Copilot)?
-- How did you use them (e.g., debugging, generating boilerplate, brainstorming solutions)?
-- What worked well? What didn't?
+It helped with:
 
-**Note: Delete this note and the content above if you didn't use AI, or replace with your own experience.**
+- Debugging React rendering and state synchronization issues.
+- Refactoring components into a cleaner architecture.
+- Brainstorming UI and UX improvements.
+- Reviewing component structure for better maintainability.
+- Suggesting performance optimizations such as lazy loading and debouncing.
+- Solving Local Storage synchronization issues.
+- Generating reusable utility functions.
+- Discussing implementation approaches before writing production code.
+
+The most valuable aspect of using AI was rapid iteration. Instead of searching through multiple documentation pages, I could quickly validate implementation ideas, troubleshoot bugs, and explore alternative approaches while still making the architectural decisions myself.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+-
+- Frontend Mentor - https://www.frontendmentor.io/profile/mmuneeb1000
+- GitHub - https://github.com/mmuneeb1000
+- LinkedIn - https://www.linkedin.com/in/muneeb-hashmi990
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+Thanks to the Frontend Mentor community for providing realistic project briefs that encourage building production-style applications instead of isolated UI components. The Frankfurter API made it possible to work with live financial data, and the React and Tailwind CSS documentation were invaluable references throughout development.

@@ -53,8 +53,8 @@ function Compare({
 
   if (loading) {
     return (
-      <section className="rounded-xl bg-neutral-800 p-6 text-center">
-        <h2 className="text-lg font-medium">Loading comparisons...</h2>
+      <section className="rounded-xl bg-neutral-900 p-6 text-center">
+        <h3 className=" font-medium">Loading comparisons...</h3>
       </section>
     );
   }

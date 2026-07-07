@@ -174,7 +174,7 @@ function History({ from, to }) {
                   onClick={() => {
                     setRange(item);
                   }}
-                  className={`rounded-md px-3 py-3 text-xs transition ${
+                  className={`rounded-md px-3 cursor-pointer hover:text-white py-3 text-xs transition ${
                     range === item
                       ? "bg-neutral-600 text-white"
                       : "text-neutral-100 "
@@ -187,9 +187,9 @@ function History({ from, to }) {
           </div>
           <div
             ref={chartRef}
-            className="flex flex-col gap-1 bg-neutral-700 h-96 px-2 py-4 rounded-xl"
+            className="flex flex-col gap-2 bg-neutral-700 h-96 px-2 py-4 rounded-xl"
           >
-            <span className="text-base ">
+            <span className="text-base">
               {from}/{to}
             </span>
 
@@ -218,7 +218,7 @@ function History({ from, to }) {
                 />
                 <XAxis
                   dataKey="date"
-                  height={40}
+                  height={30}
                   axisLine={false}
                   tickLine={false}
                   tick={{

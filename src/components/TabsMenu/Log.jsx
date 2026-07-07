@@ -59,7 +59,8 @@ function Log({ conversionLog, setConversionLog }) {
           <h3 className="uppercase">Conversion Log</h3>
           <button
             onClick={clearLog}
-            className="rounded-lg border uppercase border-neutral-200 px-2 py-1 text-xs text-neutral-200"
+            className="rounded-lg border uppercase cursor-pointer hover:border-red-500 
+            border-neutral-200 px-2 py-1 text-xs text-neutral-200"
           >
             Clear All
           </button>
@@ -86,7 +87,8 @@ function Log({ conversionLog, setConversionLog }) {
               </div>
               <button
                 onClick={() => removeLog(item.id)}
-                className="rounded-lg items-center border border-neutral-300 px-2 py-2 text-xs"
+                className="rounded-lg items-center border border-neutral-300 
+                cursor-pointer hover:border-red-500 px-2 py-2 text-xs"
               >
                 <img src={deleteIcon} />
               </button>

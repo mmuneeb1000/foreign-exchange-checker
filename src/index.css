@@ -15,8 +15,8 @@
   /* accent-colors*/
   --color-lime-500: hsl(71, 92%, 60%);
   --color-lime-800: hsl(73, 100%, 10%);
-  --color-red-500: hsl(104, 96%, 47%);
-  --color-green-500: hsl(0, 100%, 63%);
+  --color-green-500: hsl(104, 96%, 47%);
+  --color-red-500: hsl(0, 100%, 63%);
 }
 @utility no-spinner {
   &::-webkit-inner-spin-button,
@@ -44,10 +44,10 @@ h2 {
   font-size: 1.5rem;
 }
 h3 {
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 h4 {
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 .ticker-wrapper {
   position: relative;

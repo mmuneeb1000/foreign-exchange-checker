@@ -100,7 +100,7 @@ function Dropdown({ currencies = [], value, onChange }) {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         className="flex w-28 items-center justify-between rounded-lg 
-        cursor-pointer border border-neutral-300 bg-neutral-500 px-3 py-2"
+        cursor-pointer border border-neutral-300 bg-neutral-500 px-3 py-2 hover:bg-neutral-400"
       >
         <div className="flex items-center gap-3">
           {selectedCurrency && (

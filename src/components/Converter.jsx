@@ -41,7 +41,7 @@ function Converter({
                 type="number"
                 value={amount}
                 min="1"
-                onChange={(e) => setAmount(Number(e.target.value))}
+                onChange={(e) => setAmount(e.target.value)}
                 className="no-spinner bg-transparent text-2xl w-full outline-none"
               />
               <Dropdown
@@ -54,7 +54,7 @@ function Converter({
           <div className="mx-auto my-2 lg:mx-4 lg:my-auto">
             <button
               onClick={swapCurrencies}
-              className="cursor-pointer p-2 w-10 h-10 rounded-xl bg-neutral-600"
+              className="cursor-pointer p-2 w-10 h-10 rounded-xl hover:bg-neutral-500 bg-neutral-600"
             >
               <img src={ConversionIcon} alt="Swap currencies" />
             </button>
@@ -85,7 +85,7 @@ function Converter({
           <div className="flex justify-center gap-2 my-2">
             <button
               onClick={toggleFavorite}
-              className={`flex w-30 items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase ${
+              className={`flex w-27 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-xs uppercase ${
                 favorite
                   ? "bg-lime-500 text-neutral-900"
                   : "border-2 border-neutral-300 text-neutral-200"
@@ -102,7 +102,7 @@ function Converter({
 
             <button
               onClick={() => logConversion(converted)}
-              className="text-xs px-2 py-1 border uppercase border-lime-500 rounded-lg whitespace-nowrap"
+              className="text-xs px-2 py-1 border cursor-pointer uppercase border-lime-500 rounded-lg whitespace-nowrap"
             >
               Log Conversion
             </button>

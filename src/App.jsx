@@ -11,7 +11,7 @@ function App() {
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
   const [rate, setRate] = useState(0);
-  const [amount, setAmount] = useState(1000);
+  const [amount, setAmount] = useState("1000");
   const [converted, setConverted] = useState(0);
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(localStorage.getItem("favorites")) || [];
@@ -123,13 +123,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!from || !to || amount <= 0) return;
+    const numericAmount = parseFloat(amount);
+
+    if (!from || !to || Number.isNaN(numericAmount) || numericAmount <= 0) {
+      setConverted("");
+      return;
+    }
 
     const timer = setTimeout(async () => {
       try {
         setLoading(true);
 
-        const data = await convertCurrency(from, to, amount);
+        const data = await convertCurrency(from, to, numericAmount);
 
         setConverted(data.converted);
         setRate(data.rate);
