@@ -188,8 +188,8 @@ function History({ from, to }) {
                       });
                     });
                   }}
-                  className={`rounded-md px-3.5 py-3.5  cursor-pointer
-                  hover:text-white text-xs tracking-wide transition focus-lime
+                  className={`rounded-md px-3 py-3  cursor-pointer
+                  hover:text-white text-sm tracking-wide transition focus-lime
                    ${
                      range === item
                        ? "bg-neutral-600 text-white"
